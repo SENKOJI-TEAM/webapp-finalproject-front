@@ -1,4 +1,4 @@
-# PROJECT NAME (Front-End)
+# SMILE GIVERS APP (Front-End)
 
 ## COURSE INFO
 ID : CSX4107 <br />
