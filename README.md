@@ -57,5 +57,5 @@ This project uses **MERN** Stack for implementation.
 > Back-end : Express.js
 
 1. **Tools**
-2. 
+2
 
