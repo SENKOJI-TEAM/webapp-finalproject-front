@@ -101,4 +101,4 @@ HOW TO RUN THIS APP?
    ```
    Y
    ```
-   Browse to => localhost:3001
+   > Browse to => localhost:3001
