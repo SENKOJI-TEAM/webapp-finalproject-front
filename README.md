@@ -14,19 +14,16 @@ Assignment : Final Project
 ----------------------------------------------------
 
 ## PROJECT DESCRIPTION
-### ENTITIES
+### STAKEHOLDERS
 1. Admin/Distributor 
-   > acts as the site administrators who is/are responsible for managing and distributing the donated items from donators to receivers. (i.e., Charity Foundation)
-2. Receiver/Requester  
-   > can request for needed items and check for receiving progress. (i.e., Assistance Foundation)
-3. Donator/Supporter
-   > can check for current needed items and choose to donate any listed items to be distributed by the admin.
+   > acts as the site administrators who is/are responsible for managing the requested items and donation requests. (i.e., Charity Foundation)
+2. Donator/Supporter
+   > can check for current needed items and choose to donate any listed items.
 
-<br /> ----------------------------
-
-### DATABASE
-
-<br /> ----------------------------
+### ENTITIES
+1. User
+2. Item
+3. DonationRequest
 
 ### FUNTIONALITIES
 The three entities have the following CRUD operations:
@@ -34,28 +31,47 @@ The three entities have the following CRUD operations:
 > Rest API = GET, POST, PUT, PATCH, DELETE
 1. **Admin/Distributor** <br />
    can..
-   - Check from Reciever (GET)
-   - Remove (DELETE)
-   - Send (DELETE,PUT,PATCH)
-2. **Receiver/Requester** <br />
+   - add needed items (POST)
+   - update items (PUT, PATCH)
+   - check for donation requests (GET)
+   - remove needed items after success distribution (DELETE) <br />
+     > *item distribution is done outside the system*
+   - remove donation requests after receiving donated items (DELETE) 
+     > *donation acceptance is done outside the system*
+2. **Donator/Supporter** <br />
    can..
-   - Add (POST)
-   - Update (PUT,PATCH)
-   - Delete (DELETE)
-3. **Donator/Supporter** <br />
-   can..
-   - Check the need things (GET)
-   - Request to send (POST)
-   - Update (PUT, PATCH)
-   - Cancel (DELETE)
+   - check for needed items (GET)
+   - request to donate items (POST)
+   - update donation (PUT, PATCH)
+   - cancel donation (DELETE)
 
 ----------------------------------------------------
 
 ## TECH STACK
 This project uses **MERN** Stack for implementation.
+> MERN = MongoDB, Express, React, Node <br />
 > Front-end : React.js <br />
 > Back-end : Express.js
 
-1. **Tools**
-2.
+First, please make sure you have installed the followings:
+- Node.js (JavaScript Run-time) <br />
+  https://nodejs.org/en/download/
+  
+- yarn (Package Manager)
+  ```
+  npm install -g yarn
+  ```
+  - Check yarn version
+    ```
+    yarn --version
+    ```
 
+How to run this App?
+1. **Back-end**
+   ```
+    yarn dev
+    ```
+2. **Front-end**
+   ```
+    yarn start
+    ```
