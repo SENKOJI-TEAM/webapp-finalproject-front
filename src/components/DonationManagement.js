@@ -1,13 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  Row,
-  Col,
-  Form,
-  Container,
-  Table,
-  Button,
-  Modal,
-} from "react-bootstrap";
+import { Container, Table, Button, Modal, Form, Row, Col } from "react-bootstrap";
 import { FaTrashAlt, FaPencilAlt, FaPlus } from "react-icons/fa";
 import style from "../mystyle.module.css";
 
@@ -18,24 +10,92 @@ export default function DonationManagement() {
   const [donationRows, setDonationRows] = useState([]);
   const [show, setShow] = useState(false);
   const [modeAdd, setModeAdd] = useState(false);
+
   const [donation, setDonation] = useState({
     itemName: "",
     quantity: 0,
     donatorName: "",
-    contactNo: "",
+    contactNo: ""
   });
 
-  // Input references
+  // Input References
   const refItemName = useRef();
   const refQuantity = useRef();
   const refDonatorName = useRef();
   const refContactNo = useRef();
-  
+
   useEffect(() => {
     fetch(`${API_URL}/donations`)
       .then((res) => res.json())
       .then((data) => {
-        const rows = data.map((e, i) => {
+
+        const rows = data.map((e,i) => {
+          return (
+            <tr key={i}>
+              <td style={{width: '40px'}}>
+                {/* add icons (make sure to import first) */}
+                <FaPencilAlt onClick={() => {handleUpdate(e)}} />
+                {/* ways to create empty space */}
+                &nbsp; {/* {' '} */}
+                <FaTrashAlt onClick={() => {handleDelete(e)}} /> 
+              </td>
+              <td>{e.itemName}</td>
+              <td>{e.quantity}</td>
+              <td>{e.donatorName}</td>
+              <td>{e.contactNo}</td>
+            </tr>
+          );
+        });
+
+        setDonations(data);
+        setDonationRows(rows);
+      });
+  }, []);
+
+  // Set whether to show or close the Modal
+  const handleClose = () => {
+    setModeAdd(false);
+    setShow(false);
+  };
+
+  const handleShow = () => setShow(true);
+
+  // Show UPDATE Modal
+  const handleUpdate = (donation) => {
+    console.log("Update Donation", donation)
+    //refCode.current = donation.code
+
+    setShow(true);
+    setDonation(donation);
+  };
+
+  // Show ADD Modal
+  const handleShowAdd = () => {
+    setModeAdd(true);
+    setShow(true);
+  };
+
+  const handleDelete = (donation) => {
+    console.log("Delete Donation", donation._id)
+    // way to pop up confirmation modal (html-style)
+    if (window.confirm(`Are you sure to delete [${donation._id}]?`)) {
+      // DELETE data
+      fetch(`${API_URL}/donations/${donation._id}`, {
+        method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+      })
+      .then(res => res.json())
+      .then(json => {
+        // Successfully deleted
+        console.log("DELETE Result", json);
+        for (let i = 0; i < donations.length; i++) {
+          if (donations[i]._id === donation._id) {
+            donations.splice(i, 1);
+            break;
+          }
+        }
+
+        const rows = donations.map((e, i) => {
           return (
             <tr key={i}>
               <td>
@@ -59,92 +119,25 @@ export default function DonationManagement() {
           );
         });
 
-        setDonations(data);
-        setDonationRows(rows);
+        setDonations(donations);
+        setDonationRows(rows);     
+        handleClose();
       });
-  }, []);
-
-  const handleClose = () => {
-    setModeAdd(false);
-    setShow(false);
-  };
-
-  const handleDelete = (donation) => {
-    console.log(donation);
-    if (window.confirm(`Are you sure to delete [${donation.itemName}]?`)) {
-      fetch(`${API_URL}/donations/${donation._id}`, {
-        method: "DELETE",
-        mode: "cors",
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          // Successfully deleted
-          console.log("DELETE Result", json);
-          for (let i = 0; i < donations.length; i++) {
-            if (donations[i]._id === donation._id) {
-              donations.splice(i,1);
-              break;
-            }
-          }
-
-          const rows = donations.map((e, i) => {
-            return (
-              <tr key={i}>
-                <td>
-                  <FaPencilAlt
-                    onClick={() => {
-                      handleUpdate(e);
-                    }}
-                  />
-                  &nbsp;
-                  <FaTrashAlt
-                    onClick={() => {
-                      handleDelete(e);
-                    }}
-                  />
-                </td>
-                <td>{e.itemName}</td>
-                <td>{e.quantity}</td>
-                <td>{e.donatorName}</td>
-                <td>{e.contactNo}</td>
-              </tr>
-            );
-          });
-  
-          setDonations(donations);
-          setDonationRows(rows);     
-          handleClose();
-        });
     }
-  };
-
-  const handleShow = () => setShow(true);
-
-  const handleUpdate = (donation) => {
-    console.log("Update Donation", donation);
-  //   console.log(refCode);
-  //   refCode.current = donation.code;
-
-    setShow(true);
-    setDonation(donation);
-  };
-
-  const handleShowAdd = () => {
-    setModeAdd(true);
-    setShow(true);
   };
 
   const handleFormAction = () => {
     if (modeAdd) {
-      // Add new donation
-      const newDonation = {
+      // Add new item
+      const newItem = {
         itemName: refItemName.current.value,
         quantity: refQuantity.current.value,
         donatorName: refDonatorName.current.value,
-        contactNo: refContactNo.current.value,
+        contactNo: refContactNo.current.value
       };
-      console.log(newDonation);
+      console.log(newItem);
 
+      // POST data
       fetch(`${API_URL}/donations`, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
@@ -156,12 +149,11 @@ export default function DonationManagement() {
         },
         redirect: "follow", // manual, *follow, error
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(newDonation), // body data type must match "Content-Type" header
+        body: JSON.stringify(newItem), // body data type must match "Content-Type" header
       })
-        .then((res) => res.json())
-        .then((json) => {
-          // Successfully added the donation
-          console.log("POST Result", json);
+      .then(res => res.json())
+      .then(json => {
+        console.log("POST Result", json);
           donations.push(json)
           const rows = donations.map((e, i) => {
             return (
@@ -190,18 +182,21 @@ export default function DonationManagement() {
           setDonations(donations);
           setDonationRows(rows);          
           handleClose();
-        });
+      });
+      
     } else {
-      // Update donation
-      const updatedDonation = {
+      // Update item
+      const updatedItem = {
+        // _id is required for updation
         _id: donation._id,
         itemName: refItemName.current.value,
         quantity: refQuantity.current.value,
         donatorName: refDonatorName.current.value,
-        contactNo: refContactNo.current.value,
+        contactNo: refContactNo.current.value
       };
-      console.log(updatedDonation);
+      console.log(updatedItem)
 
+      // PUT data
       fetch(`${API_URL}/donations`, {
         method: "PUT", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
@@ -213,21 +208,21 @@ export default function DonationManagement() {
         },
         redirect: "follow", // manual, *follow, error
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(updatedDonation), // body data type must match "Content-Type" header
+        body: JSON.stringify(updatedItem), // body data type must match "Content-Type" header
       })
-        .then((res) => res.json())
-        .then((json) => {
-          // Successfully updated the donation
-          console.log("PUT Result", json);
-          for(let i=0; i<donations.length; i++) {
-            if (donations[i]._id === updatedDonation._id) {
-              console.log(donations[i],updatedDonation)
-              donations[i] = updatedDonation;
-              break;
-            }
+      .then(res => res.json())
+      .then(json => {
+        // Sucessfully updated the item
+        console.log("PUT Result", json)
+        for (let i=0; i<donations.length; i++) {
+          if (donations[i]._id === updatedItem._id) {
+            donations[i] = updatedItem;
+            break;
           }
-
-          const rows = donations.map((e, i) => {
+        }
+      
+        
+        const rows = donations.map((e, i) => {
             return (
               <tr key={i}>
                 <td>
@@ -243,6 +238,7 @@ export default function DonationManagement() {
                     }}
                   />
                 </td>
+            
                 <td>{e.itemName}</td>
                 <td>{e.quantity}</td>
                 <td>{e.donatorName}</td>
@@ -254,14 +250,16 @@ export default function DonationManagement() {
           setDonations(donations);
           setDonationRows(rows);     
           handleClose();
-        });
-    }
+        }); 
+      }
+    
+    
   };
 
   return (
     <>
       <Container>
-        <h1>Donation Management</h1>
+        <h1>(Temp) Donation Management</h1>
         {/* API_URL: {API_URL} */}
         <Button variant="outline-dark" onClick={handleShowAdd}>
           <FaPlus /> Add
@@ -270,13 +268,14 @@ export default function DonationManagement() {
           <thead>
             <tr>
               <th style={{ width: "60px" }}>&nbsp;</th>
-              <th className={style.textLeft}>Item Name</th>
-              <th className={style.textLeft}>Item Quantity</th>
-              <th className={style.textLeft}>Donator Name</th>
-              <th className={style.textLeft}>Contact Number</th>
+          
+              <th className={style.textCenter}>Name</th>
+              <th className={style.textCenter}>Need</th>
             </tr>
           </thead>
-          <tbody>{donationRows}</tbody>
+          <tbody>
+            {donationRows}
+          </tbody>
         </Table>
       </Container>
 
@@ -288,9 +287,10 @@ export default function DonationManagement() {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {modeAdd ? "Add New Donation" : "Update Dontation"}
+            {modeAdd ? "Add New Item" : "Update item"}
           </Modal.Title>
         </Modal.Header>
+
         <Modal.Body>
           <Form>
             <Row>
@@ -302,11 +302,7 @@ export default function DonationManagement() {
             <Row>
               <Col>Item Quantity</Col>
               <Col>
-                <input
-                  type="number"
-                  ref={refQuantity}
-                  defaultValue={donation.quantity}
-                />
+                <input type="number" ref={refQuantity} defaultValue={donation.neededAmount} />
               </Col>
             </Row>
             <Row>
@@ -323,15 +319,17 @@ export default function DonationManagement() {
             </Row>
           </Form>
         </Modal.Body>
+
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
           <Button variant="primary" onClick={handleFormAction}>
-            {modeAdd ? "Add" : "Update"}
+            {modeAdd ? 'Add' : 'Update'}
           </Button>
         </Modal.Footer>
       </Modal>
+
     </>
   );
 }
