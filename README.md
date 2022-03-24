@@ -31,8 +31,8 @@ This application is used to manage item donation requesting process with regards
    - phone
 2. Item
    - name
-   - quantity
-3. Request
+   - neededAmount
+3. Donation
    - itemName
    - quantity
    - donatorName
