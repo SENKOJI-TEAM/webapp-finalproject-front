@@ -3,27 +3,25 @@ import { Container, Table, Button, Modal, Form, Row, Col } from "react-bootstrap
 import { FaTrashAlt, FaPencilAlt, FaPlus } from "react-icons/fa";
 import style from "../mystyle.module.css";
 
-export default function ProductManagement() {
+export default function ItemManagement() {
   const API_URL = process.env.REACT_APP_API_URL;
 
-  const [products, setProducts] = useState([]);
-  const [productRows, setProductRows] = useState([]);
+  const [items, setItems] = useState([]);
+  const [itemRows, setItemRows] = useState([]);
   const [show, setShow] = useState(false);
   const [modeAdd, setModeAdd] = useState(false);
 
-  const [product, setProduct] = useState({
-    code: "",
+  const [item, setItem] = useState({
     name: "",
-    price: 0
+    neededAmount: 0
   });
 
   // Input References
-  const refCode = useRef();
   const refName = useRef();
-  const refPrice = useRef();
+  const refNeed = useRef();
 
   useEffect(() => {
-    fetch(`${API_URL}/products`)
+    fetch(`${API_URL}/items`)
       .then((res) => res.json())
       .then((data) => {
 
@@ -37,15 +35,14 @@ export default function ProductManagement() {
                 &nbsp; {/* {' '} */}
                 <FaTrashAlt onClick={() => {handleDelete(e)}} /> 
               </td>
-              <td>{e.code}</td>
               <td>{e.name}</td>
-              <td>{e.price}</td>
+              <td>{e.neededAmount}</td>
             </tr>
           );
         });
 
-        setProducts(data);
-        setProductRows(rows);
+        setItems(data);
+        setItemRows(rows);
       });
   }, []);
 
@@ -58,13 +55,13 @@ export default function ProductManagement() {
   const handleShow = () => setShow(true);
 
   // Show UPDATE Modal
-  const handleUpdate = (product) => {
-    console.log("Update Product", product)
-    console.log(refCode)
-    refCode.current = product.code
+  const handleUpdate = (item) => {
+    console.log("Update Item", item)
+    //console.log(refCode)
+    //refCode.code = item.code
 
     setShow(true);
-    setProduct(product);
+    setItem(item);
   };
 
   // Show ADD Modal
@@ -73,12 +70,12 @@ export default function ProductManagement() {
     setShow(true);
   };
 
-  const handleDelete = (product) => {
-    console.log("Delete Product", product)
+  const handleDelete = (item) => {
+    console.log("Delete item", item)
     // way to pop up confirmation modal (html-style)
-    if (window.confirm(`Are you sure to delete [${product.name}]?`)) {
+    if (window.confirm(`Are you sure to delete [${item.name}]?`)) {
       // DELETE data
-      fetch(`${API_URL}/products/${product._id}`, {
+      fetch(`${API_URL}/items/${item._id}`, {
         method: "DELETE", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
       })
@@ -86,14 +83,14 @@ export default function ProductManagement() {
       .then(json => {
         // Successfully deleted
         console.log("DELETE Result", json);
-        for (let i = 0; i < products.length; i++) {
-          if (products[i]._id === product._id) {
-            products.splice(i, 1);
+        for (let i = 0; i < items.length; i++) {
+          if (items[i]._id === item._id) {
+            items.splice(i, 1);
             break;
           }
         }
 
-        const rows = products.map((e, i) => {
+        const rows = items.map((e, i) => {
           return (
             <tr key={i}>
               <td>
@@ -109,15 +106,14 @@ export default function ProductManagement() {
                   }}
                 />
               </td>
-              <td>{e.code}</td>
               <td>{e.name}</td>
-              <td>{e.price}</td>
+              <td>{e.neededAmount}</td>
             </tr>
           );
         });
 
-        setProducts(products);
-        setProductRows(rows);     
+        setItems(items);
+        setItemRows(rows);     
         handleClose();
       });
     }
@@ -125,16 +121,15 @@ export default function ProductManagement() {
 
   const handleFormAction = () => {
     if (modeAdd) {
-      // Add new product
-      const newProduct = {
-        code: refCode.current.value,
+      // Add new item
+      const newItem = {
         name: refName.current.value,
-        price: refPrice.current.value
+        neededAmount: refNeed.current.value
       };
-      console.log(newProduct);
+      console.log(newItem);
 
       // POST data
-      fetch(`${API_URL}/products`, {
+      fetch(`${API_URL}/items`, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -145,13 +140,13 @@ export default function ProductManagement() {
         },
         redirect: "follow", // manual, *follow, error
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(newProduct), // body data type must match "Content-Type" header
+        body: JSON.stringify(newItem), // body data type must match "Content-Type" header
       })
       .then(res => res.json())
       .then(json => {
         console.log("POST Result", json);
-          products.push(json)
-          const rows = products.map((e, i) => {
+          items.push(json)
+          const rows = items.map((e, i) => {
             return (
               <tr key={i}>
                 <td>
@@ -167,30 +162,28 @@ export default function ProductManagement() {
                     }}
                   />
                 </td>
-                <td>{e.code}</td>
                 <td>{e.name}</td>
-                <td>{e.price}</td>
+                <td>{e.neededAmount}</td>
               </tr>
             );
           });
   
-          setProducts(products);
-          setProductRows(rows);          
+          setItems(items);
+          setItemRows(rows);          
           handleClose();
         });
     } else {
-      // Update product
-      const updatedProduct = {
+      // Update item
+      const updatedItem = {
         // _id is required for updation
-        _id: product._id,
-        code: refCode.current.value,
+        _id: item._id,
         name: refName.current.value,
-        price: refPrice.current.value
+        neededAmount: refNeed.current.value
       };
-      console.log(updatedProduct)
+      console.log(updatedItem)
 
       // PUT data
-      fetch(`${API_URL}/products`, {
+      fetch(`${API_URL}/items`, {
         method: "PUT", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -201,20 +194,20 @@ export default function ProductManagement() {
         },
         redirect: "follow", // manual, *follow, error
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(updatedProduct), // body data type must match "Content-Type" header
+        body: JSON.stringify(updatedItem), // body data type must match "Content-Type" header
       })
       .then(res => res.json())
       .then(json => {
-        // Sucessfully updated the product
+        // Sucessfully updated the item
         console.log("PUT Result", json)
-        for (let i=0; i<products.length; i++) {
-          if (products[i]._id === updatedProduct._id) {
-            products[i] = updatedProduct;
+        for (let i=0; i<items.length; i++) {
+          if (items[i]._id === updatedItem._id) {
+            items[i] = updatedItem;
             break;
           }
         }
         
-        const rows = products.map((e, i) => {
+        const rows = items.map((e, i) => {
             return (
               <tr key={i}>
                 <td>
@@ -230,15 +223,15 @@ export default function ProductManagement() {
                     }}
                   />
                 </td>
-                <td>{e.code}</td>
+            
                 <td>{e.name}</td>
-                <td>{e.price}</td>
+                <td>{e.neededAmount}</td>
               </tr>
             );
           });
   
-          setProducts(products);
-          setProductRows(rows);     
+          setItems(items);
+          setItemRows(rows);     
           handleClose();
         });
     }
@@ -247,7 +240,7 @@ export default function ProductManagement() {
   return (
     <>
       <Container>
-        <h1>Product Management</h1>
+        <h1>Item Management</h1>
         {/* API_URL: {API_URL} */}
         <Button variant="outline-dark" onClick={handleShowAdd}>
           <FaPlus /> Add
@@ -256,13 +249,13 @@ export default function ProductManagement() {
           <thead>
             <tr>
               <th style={{ width: "60px" }}>&nbsp;</th>
-              <th className={style.textCenter}>Code</th>
+          
               <th className={style.textCenter}>Name</th>
-              <th className={style.textCenter}>Price/Unit</th>
+              <th className={style.textCenter}>Need</th>
             </tr>
           </thead>
           <tbody>
-            {productRows}
+            {itemRows}
           </tbody>
         </Table>
       </Container>
@@ -275,28 +268,22 @@ export default function ProductManagement() {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {modeAdd ? "Add New Product" : "Update Product"}
+            {modeAdd ? "Add New Item" : "Update item"}
           </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
           <Form>
             <Row>
-              <Col>Code</Col>
-              <Col>
-                <input type="text" ref={refCode} defaultValue={product.code} />
-              </Col>
-            </Row>
-            <Row>
               <Col>Name</Col>
               <Col>
-                <input type="text" ref={refName} defaultValue={product.name} />
+                <input type="text" ref={refName} defaultValue={item.name} />
               </Col>
             </Row>
             <Row>
-              <Col>Price</Col>
+              <Col>Need</Col>
               <Col>
-                <input type="number" ref={refPrice} defaultValue={product.price} />
+                <input type="number" ref={refNeed} defaultValue={item.neededAmount} />
               </Col>
             </Row>
           </Form>

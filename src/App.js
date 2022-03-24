@@ -6,11 +6,13 @@ import {
   Row,
   Col,
   Button,
-  Form,
+  Form
 } from "react-bootstrap";
 import { useLocalStorage } from "react-use";
-import Quotation from "./components/Quotation";
-import ProductManagement from "./components/ProductManagement";
+import Donation from "./components/Donation";
+import ItemManagement from "./components/ItemManagement";
+import DonationManagement from "./components/DonationManagement";
+import TempDonationManagement from "./components/TempDonationManagement";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { Login } from "./components/Login";
 
@@ -49,13 +51,22 @@ function App() {
     <Router>
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">VMS Company</Navbar.Brand>
+          <Navbar.Brand href="#home">SMILE GIVERS</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/react-quotation">Home</Nav.Link>
-            <Nav.Link href="/react-quotation/quotation">Quotation</Nav.Link>
-            {/* <Nav.Link href="#pricing">Pricing</Nav.Link> */}
-            <Nav.Link href="/react-quotation/product-management">
-              Product
+            <Nav.Link href="/react-quotation">
+              Log-In
+            </Nav.Link>
+            <Nav.Link href="/react-quotation/donation">
+              Donate
+            </Nav.Link>
+            <Nav.Link href="/react-quotation/item-management">
+              Item Management
+            </Nav.Link>
+            <Nav.Link href="/react-quotation/donation-management">
+              Donation Management
+            </Nav.Link>
+            <Nav.Link href="/react-quotation/temp-donation-management">
+              Temp
             </Nav.Link>
           </Nav>
         </Container>
@@ -63,18 +74,26 @@ function App() {
 
       <Routes>
         <Route
-          path="/react-quotation/product-management"
-          element={<ProductManagement />}
+          path="/react-quotation/item-management"
+          element={<ItemManagement />}
+        />
+        <Route
+          path="/react-quotation/donation-management"
+          element={<DonationManagement />}
+        />
+        <Route
+          path="/react-quotation/temp-donation-management"
+          element={<TempDonationManagement />}
         />
 
-        <Route path="/react-quotation/quotation" element={<Quotation />} />
+        <Route path="/react-quotation/donation" element={<Donation />} />
         <Route
           path="/react-quotation/"
           element={
 
             <Container>
               { user ? (
-                <div> Hello {user.name} </div>
+                <div> Hello {user.username} </div>
               ) : (
                 // Login Page
                 <Login onLogin={handleLogin} />

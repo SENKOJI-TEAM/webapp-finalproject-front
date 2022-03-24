@@ -4,37 +4,37 @@ import { Container, Row, Col, Button, Table } from "react-bootstrap";
 import style from "../mystyle.module.css";
 import { FaTrashAlt } from "react-icons/fa";
 
-function QuotationTable({ data, clearDataItems, updateDataItems }) {
-  // const [dataItems, setDataItems] = useState(data);
+function DonationTable({ data, clearDataItems, updateDataItems }) {
+  // const [dataDonations, setDataDonations] = useState(data);
   const [dataRows, setDataRows] = useState();
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    let sum = 0;
+    // let sum = 0;
     const z = data.map((v, i) => {
-      let amount = v.qty * v.price;
-      sum += amount;
+      // let amount = v.qty * v.price;
+      // sum += amount;
       return (
         <tr key={i}>
           <td className={style.textCenter}>
-            <FaTrashAlt onClick={() => deleteItem(v.code)} />
+            <FaTrashAlt onClick={() => deleteItem(v._id)} />
           </td>
-          <td className={style.textCenter}>{v.qty}</td>
-          <td>{v.name}</td>
-          <td className={style.textCenter}>{formatNumber(v.price)}</td>
-          <td className={style.textRight}>{formatNumber(amount)}</td>
+          <td className={style.textCenter}>{v.itemName}</td>
+          <td className={style.textCenter}>{v.quantity}</td>
+          <td className={style.textCenter}>{v.donatorName}</td>
+          <td className={style.textCenter}>{v.contactNo}</td>
         </tr>
       );
     });
 
     setDataRows(z);
-    setTotal(sum);
+    //setTotal(sum);
   }, [data]);
 
-  const deleteItem = (code) => {
-    var z = data.filter((value, index, arr) => value.code !== code);
+  const deleteItem = (_id => {
+    var z = data.filter((value, index, arr) => value._id != _id);
     updateDataItems(z);
-  };
+  });
 
   const clearTable = () => {
     clearDataItems();
@@ -48,7 +48,7 @@ function QuotationTable({ data, clearDataItems, updateDataItems }) {
 
   return (
     <div>
-      <h1>Quotation</h1>
+      <h1>Donation</h1>
       <Button onClick={clearTable} variant="outline-dark">
         Clear
       </Button>
@@ -56,14 +56,14 @@ function QuotationTable({ data, clearDataItems, updateDataItems }) {
         <thead>
           <tr>
             <th style={{ width: "20px" }}>&nbsp;</th>
+            <th className={style.textCenter}>Name</th>
             <th className={style.textCenter}>Qty</th>
-            <th className={style.textCenter}>Item</th>
-            <th className={style.textCenter}>Price/Unit</th>
-            <th className={style.textCenter}>Amount</th>
+            <th className={style.textCenter}>Donator</th>
+            <th className={style.textCenter}>ContactNo</th>
           </tr>
         </thead>
         <tbody>{dataRows}</tbody>
-        <tfoot>
+        {/* <tfoot>
           <tr>
             <td colSpan={4} className={style.textRight}>
               Total
@@ -72,10 +72,10 @@ function QuotationTable({ data, clearDataItems, updateDataItems }) {
               {formatNumber(total)}
             </td>
           </tr>
-        </tfoot>
+        </tfoot> */}
       </Table>
     </div>
   );
 }
 
-export default QuotationTable;
+export default DonationTable;

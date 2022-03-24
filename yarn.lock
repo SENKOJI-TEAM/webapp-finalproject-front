@@ -12631,6 +12631,11 @@ react-app-polyfill@^3.0.0:
     regenerator-runtime "^0.13.9"
     whatwg-fetch "^3.6.2"
 
+react-bootstrap-dropdown-menu@^1.1.23:
+  version "1.1.23"
+  resolved "https://registry.yarnpkg.com/react-bootstrap-dropdown-menu/-/react-bootstrap-dropdown-menu-1.1.23.tgz#2ada11736e1cfbaad648b69cad4cf98215f9e08e"
+  integrity sha512-fAAE9ClSuniyXnuwpeJAU7JYRS5iJNiX4dU9yizZFj8VTsmSXqr5xyJI9f+x9P/rBGLXcbnzYdv27hZepQWNLQ==
+
 react-bootstrap@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-2.0.4.tgz#dd0f4228db2093ec60663778f2a3690788773b45"

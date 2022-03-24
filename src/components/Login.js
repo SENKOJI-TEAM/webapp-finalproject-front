@@ -17,7 +17,8 @@ export function Login({ email, password, onLogin }) {
     <Form onSubmit={handleSubmit(onLogin)}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Row style={{ textAlign: "center" }}>
-          <h1>VMS Stock System</h1>
+          <h1> SMILE GIVERS </h1>
+          <h2> LOG-IN </h2>
         </Row>
         <Form.Label>Email address</Form.Label>
         <Form.Control
@@ -35,7 +36,7 @@ export function Login({ email, password, onLogin }) {
         <Form.Control
           type="password"
           placeholder="Enter password"
-          defaultValue={password}
+          //defaultValue={password}
           {...register("password", { required: true, min: 8 })}
         />
         {/* <Form.Text className="text-muted">
