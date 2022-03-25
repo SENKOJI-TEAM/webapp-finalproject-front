@@ -3,7 +3,7 @@ import { Container, Table, Button, Modal, Form, Row, Col } from "react-bootstrap
 import { FaTrashAlt, FaPencilAlt, FaPlus } from "react-icons/fa";
 import style from "../mystyle.module.css";
 
-export default function ItemManagement() {
+export default function UserItemManagement() {
   const API_URL = process.env.REACT_APP_API_URL;
 
   const [items, setItems] = useState([]);
@@ -30,10 +30,10 @@ export default function ItemManagement() {
             <tr key={i}>
               <td style={{width: '40px'}}>
                 {/* add icons (make sure to import first) */}
-                <FaPencilAlt onClick={() => {handleUpdate(e)}} />
+                {/* <FaPencilAlt onClick={() => {handleUpdate(e)}} /> */}
                 {/* ways to create empty space */}
                 &nbsp; {/* {' '} */}
-                <FaTrashAlt onClick={() => {handleDelete(e)}} /> 
+                {/* <FaTrashAlt onClick={() => {handleDelete(e)}} />  */}
               </td>
               <td>{e.name}</td>
               <td>{e.neededAmount}</td>
@@ -93,7 +93,7 @@ export default function ItemManagement() {
         const rows = items.map((e, i) => {
           return (
             <tr key={i}>
-              <td>
+              {/* <td>
                 <FaPencilAlt
                   onClick={() => {
                     handleUpdate(e);
@@ -105,7 +105,7 @@ export default function ItemManagement() {
                     handleDelete(e);
                   }}
                 />
-              </td>
+              </td> */}
               <td>{e.name}</td>
               <td>{e.neededAmount}</td>
             </tr>
@@ -169,7 +169,7 @@ export default function ItemManagement() {
             const rows = items.map((e, i) => {
               return (
                 <tr key={i}>
-                  <td>
+                  {/* <td>
                     <FaPencilAlt
                       onClick={() => {
                         handleUpdate(e);
@@ -181,7 +181,7 @@ export default function ItemManagement() {
                         handleDelete(e);
                       }}
                     />
-                  </td>
+                  </td> */}
                   <td>{e.name}</td>
                   <td>{e.neededAmount}</td>
                 </tr>
@@ -231,7 +231,7 @@ export default function ItemManagement() {
         const rows = items.map((e, i) => {
             return (
               <tr key={i}>
-                <td>
+                {/* <td>
                   <FaPencilAlt
                     onClick={() => {
                       handleUpdate(e);
@@ -243,7 +243,7 @@ export default function ItemManagement() {
                       handleDelete(e);
                     }}
                   />
-                </td>
+                </td> */}
             
                 <td>{e.name}</td>
                 <td>{e.neededAmount}</td>
@@ -261,11 +261,11 @@ export default function ItemManagement() {
   return (
     <>
       <Container>
-        <h1>Item Management</h1>
+        <h1>Item</h1>
         {/* API_URL: {API_URL} */}
-        <Button variant="outline-dark" onClick={handleShowAdd}>
+        {/* <Button variant="outline-dark" onClick={handleShowAdd}>
           <FaPlus /> Add
-        </Button>
+        </Button> */}
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -311,9 +311,9 @@ export default function ItemManagement() {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          {/* <Button variant="secondary" onClick={handleClose}>
             Close
-          </Button>
+          </Button> */}
           <Button variant="primary" onClick={handleFormAction}>
             {modeAdd ? 'Add' : 'Update'}
           </Button>

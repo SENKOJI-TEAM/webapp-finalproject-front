@@ -12,6 +12,8 @@ import { useLocalStorage } from "react-use";
 import Donation from "./components/Donation";
 import ItemManagement from "./components/ItemManagement";
 import DonationManagement from "./components/DonationManagement";
+import UserItemManagement from "./components/UserItemManagement";
+import UserDonationManagement from "./components/UserDonationManagement";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { Login } from "./components/Login";
 
@@ -64,6 +66,12 @@ function App() {
             <Nav.Link href="/react-quotation/donation-management">
               Donation Management
             </Nav.Link>
+            <Nav.Link href="/react-quotation/user-item-management">
+              Item
+            </Nav.Link>
+            <Nav.Link href="/react-quotation/user-donation-management">
+              Donation
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -76,6 +84,14 @@ function App() {
         <Route
           path="/react-quotation/donation-management"
           element={<DonationManagement />}
+        />
+        <Route
+          path="/react-quotation/user-item-management"
+          element={<UserItemManagement />}
+        />
+        <Route
+          path="/react-quotation/user-donation-management"
+          element={<UserDonationManagement />}
         />
 
         <Route path="/react-quotation/donation" element={<Donation />} />

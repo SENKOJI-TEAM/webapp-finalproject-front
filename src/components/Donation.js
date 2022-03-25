@@ -51,6 +51,7 @@ function Donation() {
         ));
         setItems(data);
         setItemOptions(z);
+        console.log("options:", z)
       });
   }, []);
 
@@ -139,7 +140,8 @@ function Donation() {
 
     console.log("contact=", contact);
     if (currentQuantity <= 0) {
-      window.alert("Donation quantity must be at least 1")
+      window.alert("Donation quantity must be at least 1.")
+      return false;
     } else if (donatorName === "") {
       window.alert("Please fill the donator's name.")
       return false;

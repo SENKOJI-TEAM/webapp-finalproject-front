@@ -48,10 +48,10 @@ function DonationTable({ data, clearDataItems, updateDataItems }) {
 
   return (
     <div>
-      <h1>Donation</h1>
-      <Button onClick={clearTable} variant="outline-dark">
+      <h1>Recent Donation</h1>
+      {/* <Button onClick={clearTable} variant="outline-dark">
         Clear
-      </Button>
+      </Button> */}
       <Table striped bordered hover>
         <thead>
           <tr>

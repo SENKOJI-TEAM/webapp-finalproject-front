@@ -11,7 +11,7 @@ export function Login({ email, password, onLogin }) {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => console.log(data);
-  console.log(errors);
+  //console.log(errors);
 
   return (
     <Form onSubmit={handleSubmit(onLogin)}>
