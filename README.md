@@ -34,7 +34,7 @@ This application is used to manage item donation requesting process with regards
    - donatorName
    - contactNo
    - donationStatus
-3. Request
+3. EditRequest
    - type
    - requestorName
    - donationCode
