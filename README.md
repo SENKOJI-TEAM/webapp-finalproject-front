@@ -55,9 +55,9 @@ This application is used to manage item donation requesting process with regards
 2. **Donator/Supporter** <br />
    can..
    - check for needed items (GET)
-   - request to donate items (POST)
-   - update donation (PUT, PATCH)
-   - cancel donation (DELETE)
+   - donate items (POST)
+   - request to update donation (PUT, PATCH)
+   - request to cancel donation (DELETE)
 
 ----------------------------------------------------
 
