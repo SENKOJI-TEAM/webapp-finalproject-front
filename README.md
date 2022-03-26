@@ -24,19 +24,21 @@ This application is used to manage item donation requesting process with regards
    > can check for current needed items and choose to donate any listed items in a desired quantity.
 
 ### ENTITIES
-1. User (Admin)
-   - username
-   - password
-   - email
-   - phone
-2. Item
+1. Item
    - name
    - neededAmount
-3. Donation
+2. Donation
+   - code
    - itemName
    - quantity
    - donatorName
    - contactNo
+   - donationStatus
+3. Request
+   - type
+   - requestorName
+   - donationCode
+   - requestStatus
 
 ### FUNTIONALITIES
 > CRUD = CREATE, READ, UPDATE, DELETE <br />
