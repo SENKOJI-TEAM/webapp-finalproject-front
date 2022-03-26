@@ -25,6 +25,10 @@ export default function ItemManagement() {
       .then((res) => res.json())
       .then((data) => {
 
+        data.sort((a, b) => {
+          return b.neededAmount - a.neededAmount;
+        });
+        
         const rows = data.map((e,i) => {
           return (
             <tr key={i}>
@@ -263,7 +267,7 @@ export default function ItemManagement() {
       <Container>
         <h1>Item Management</h1>
         {/* API_URL: {API_URL} */}
-        <Button variant="outline-dark" onClick={handleShowAdd}>
+        <Button variant="warning" onClick={handleShowAdd}>
           <FaPlus /> Add
         </Button>
         <Table striped bordered hover>
@@ -298,13 +302,23 @@ export default function ItemManagement() {
             <Row>
               <Col>Name</Col>
               <Col>
-                <input type="text" ref={refName} defaultValue={item.name} />
+                <Form.Control 
+                type="String" 
+                ref={refName}
+                defaultValue={item.name}
+                />
+                {/* <input type="text" ref={refName} defaultValue={item.name} /> */}
               </Col>
             </Row>
             <Row>
               <Col>Need</Col>
               <Col>
-                <input type="number" ref={refNeed} defaultValue={item.neededAmount} />
+                <Form.Control 
+                type="number" 
+                ref={refNeed}
+                defaultValue={item.neededAmount}
+                />
+                {/* <input type="number" ref={refNeed} defaultValue={item.neededAmount} /> */}
               </Col>
             </Row>
           </Form>

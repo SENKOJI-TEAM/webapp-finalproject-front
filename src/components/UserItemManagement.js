@@ -24,17 +24,27 @@ export default function UserItemManagement() {
     fetch(`${API_URL}/items`)
       .then((res) => res.json())
       .then((data) => {
+        
+        data.sort((a, b) => {
+          return b.neededAmount - a.neededAmount;
+        });
 
         const rows = data.map((e,i) => {
           return (
             <tr key={i}>
-              <td style={{width: '40px'}}>
-                {/* add icons (make sure to import first) */}
-                {/* <FaPencilAlt onClick={() => {handleUpdate(e)}} /> */}
-                {/* ways to create empty space */}
-                &nbsp; {/* {' '} */}
-                {/* <FaTrashAlt onClick={() => {handleDelete(e)}} />  */}
-              </td>
+              {/* <td>
+                <FaPencilAlt
+                  onClick={() => {
+                    handleUpdate(e);
+                  }}
+                />
+                &nbsp;
+                <FaTrashAlt
+                  onClick={() => {
+                    handleDelete(e);
+                  }}
+                />
+              </td> */}
               <td>{e.name}</td>
               <td>{e.neededAmount}</td>
             </tr>
@@ -260,8 +270,9 @@ export default function UserItemManagement() {
 
   return (
     <>
-      <Container>
-        <h1>Item</h1>
+      <Container style={{ padding: "20px" }}>
+        <h1>Items</h1>
+        <h5>Thank you for your support!</h5>
         {/* API_URL: {API_URL} */}
         {/* <Button variant="outline-dark" onClick={handleShowAdd}>
           <FaPlus /> Add
@@ -269,8 +280,7 @@ export default function UserItemManagement() {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th style={{ width: "60px" }}>&nbsp;</th>
-          
+              {/*<th style={{ width: "60px" }}>&nbsp;</th>*/}
               <th className={style.textLeft}>Name</th>
               <th className={style.textLeft}>Need</th>
             </tr>
@@ -310,14 +320,14 @@ export default function UserItemManagement() {
           </Form>
         </Modal.Body>
 
-        <Modal.Footer>
-          {/* <Button variant="secondary" onClick={handleClose}>
+        {/* <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
             Close
-          </Button> */}
+          </Button>
           <Button variant="primary" onClick={handleFormAction}>
             {modeAdd ? 'Add' : 'Update'}
           </Button>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
 
     </>

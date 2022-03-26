@@ -5,21 +5,25 @@ import PropTypes from "prop-types";
 import { Form, Button, Row } from "react-bootstrap";
 
 export function Login({ email, password, onLogin }) {
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => console.log(data);
   //console.log(errors);
 
   return (
     <Form onSubmit={handleSubmit(onLogin)}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
+
         <Row style={{ textAlign: "center" }}>
           <h1> SMILE GIVERS </h1>
           <h2> LOG-IN </h2>
         </Row>
+
         <Form.Label>Email address</Form.Label>
         <Form.Control
           type="email"
@@ -27,9 +31,11 @@ export function Login({ email, password, onLogin }) {
           defaultValue={email}
           {...register("email", { required: true })}
         />
+
         {/* <Form.Text className="text-muted">
           We'll never share your email with anyone else.
         </Form.Text> */}
+
       </Form.Group>
       <Form.Group className="mb-3" controlId="formPassword">
         <Form.Label>Password</Form.Label>
@@ -50,6 +56,7 @@ export function Login({ email, password, onLogin }) {
           Login
         </Button>
       </div>
+      
     </Form>
   );
 }
@@ -62,6 +69,6 @@ Login.propTypes = {
 
 Login.defaultProps = {
   email: null,
-  password: false,
+  password: null, //false??
   onLogin: undefined,
 };

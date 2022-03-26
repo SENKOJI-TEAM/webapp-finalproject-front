@@ -20,10 +20,12 @@ function Donation() {
   // contactNo: data.contactNo
 
   const itemRef = useRef();
+ // const codeRef = useRef();
   const itemNameRef = useRef();
   const quantityRef = useRef();
   const donatorNameRef = useRef();
   const contactNoRef = useRef();
+  const donationStatusRef = useRef();
 
   const [localDataItems, setLocalDataItems, remove] = useLocalStorage(
     "data-items",
@@ -35,6 +37,7 @@ function Donation() {
   const [items, setItems] = useState([]);
   const [itemOptions, setItemOptions] = useState([]);
   const [quantity, setQuantity] = useState(0);
+  const [randomCode, setRandomCode] = useState();
   //const [donationDisabled, setDonationDisabled] = useState();
 
   useEffect(() => {
@@ -78,10 +81,12 @@ function Donation() {
     //console.log(item);
     var donationObj = {
       _id: item._id,
+      code: randomCode,
       itemName: item.name,
       quantity: quantityRef.current.value,
       donatorName: donatorNameRef.current.value,
-      contactNo: contactNoRef.current.value
+      contactNo: contactNoRef.current.value,
+      donationStatus: "-",
     };
 
     dataItems.push(donationObj);
@@ -92,11 +97,14 @@ function Donation() {
 
   const donateItem = () => {
     let item = items.find((v) => itemRef.current.value === v._id);
+    let randomizedCode = Math.floor(Math.random() * 1000000) + 1;
     const newDonation = {
+        code: randomizedCode,
         itemName: item.name,
         quantity: quantityRef.current.value,
         donatorName: donatorNameRef.current.value,
-        contactNo: contactNoRef.current.value
+        contactNo: contactNoRef.current.value,
+        donationStatus: "-"
       };
       //console.log(newDonation);
 
@@ -167,7 +175,7 @@ function Donation() {
   };
 
   return (
-    <Container>
+    <Container style={{ padding: "20px" }}>
       <Row>
         <Col md={4} style={{ backgroundColor: "#e4e4e4" }}>
 

@@ -2,13 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import { Container, Table, Button, Modal, Form, Row, Col } from "react-bootstrap";
 import { FaTrashAlt, FaPencilAlt, FaPlus } from "react-icons/fa";
 import style from "../mystyle.module.css";
-import {Link } from "react-router-dom";
 
-export default function DonationManagement() {
+export default function RequestManagement() {
   const API_URL = process.env.REACT_APP_API_URL;
 
-  const [donations, setDonations] = useState([]);
-  const [donationRows, setDonationRows] = useState([]);
+  const [requests, setRequests] = useState([]);
+  const [requestRows, setRequestRows] = useState([]);
   const [show, setShow] = useState(false);
   const [modeAdd, setModeAdd] = useState(false);
 
@@ -16,43 +15,45 @@ export default function DonationManagement() {
   const [itemOptions, setItemOptions] = useState([]);
   const [itemNameToAdd, setItemNameToAdd] = useState();
 
-  const [donation, setDonation] = useState({
-    code: 0,
-    itemName: "",
-    quantity: 0,
-    donatorName: "",
-    contactNo: "",
-    donationStatus: ""
+  const [request, setRequest] = useState({
+    type: "",
+    requestorName: "",
+    donationCode: "",
+    requestStatus: ""
   });
 
   // Input References
-  const refCode = useRef();
-  const refItemName = useRef();
-  const refQuantity = useRef();
-  const refDonatorName = useRef();
-  const refContactNo = useRef();
-  const refDonationStatus = useRef();
+  const refType = useRef();
+  const refRequestorName = useRef();
+  const refDonationCode = useRef();
+  const refRequestStatus = useRef();
 
   useEffect(() => {
-    fetch(`${API_URL}/donations`)
+    fetch(`${API_URL}/requests`)
       .then((res) => res.json())
       .then((data) => {
         
         const rows = data.map((e,i) => {
           return (
             <tr key={i}>
-              <td>{e.code}</td>
-              <td>{e.itemName}</td>
-              <td>{e.quantity}</td>
-              <td>{e.donatorName}</td>
-              <td>{e.contactNo}</td>
-              <td>{e.donationStatus}</td>
+              <td style={{width: '40px'}}>
+                {/* add icons (make sure to import first) */}
+                <FaPencilAlt onClick={() => {handleUpdate(e)}} />
+                {/* ways to create empty space */}
+                {/*&nbsp;*/} {/* {' '} */}
+                {/*<FaTrashAlt onClick={() => {handleDelete(e)}} />*/} 
+              </td>
+              <td>{e.type}</td>
+              <td>{e.requestorName}</td>
+              <td>{e.donationCode}</td>
+              <td>{e.requestStatus}</td>
             </tr>
           );
         });
 
-        setDonations(data);
-        setDonationRows(rows);
+        console.log(data)
+        setRequests(data);
+        setRequestRows(rows);
       });
 
       fetch(`${API_URL}/items`)
@@ -80,12 +81,12 @@ export default function DonationManagement() {
   const handleShow = () => setShow(true);
 
   // Show UPDATE Modal
-  const handleUpdate = (donation) => {
-    console.log("Update Donation", donation)
-    //refCode.current = donation.code
+  const handleUpdate = (request) => {
+    console.log("Update Request", request)
+    //refCode.current = request.code
 
     setShow(true);
-    setDonation(donation);
+    setRequest(request);
   };
 
   // Show ADD Modal
@@ -94,12 +95,12 @@ export default function DonationManagement() {
     setShow(true);
   };
 
-  const handleDelete = (donation) => {
-    console.log("Delete Donation", donation._id)
+  const handleDelete = (request) => {
+    console.log("Delete Request", request._id)
     // way to pop up confirmation modal (html-style)
-    if (window.confirm(`Are you sure to delete "${donation.itemName}"?`)) {
+    if (window.confirm(`Are you sure to delete "${request.itemName}"?`)) {
       // DELETE data
-      fetch(`${API_URL}/donations/${donation._id}`, {
+      fetch(`${API_URL}/requests/${request._id}`, {
         method: "DELETE", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
       })
@@ -107,17 +108,17 @@ export default function DonationManagement() {
       .then(json => {
         // Successfully deleted
         console.log("DELETE Result", json);
-        for (let i = 0; i < donations.length; i++) {
-          if (donations[i]._id === donation._id) {
-            donations.splice(i, 1);
+        for (let i = 0; i < requests.length; i++) {
+          if (requests[i]._id === request._id) {
+            requests.splice(i, 1);
             break;
           }
         }
 
-        const rows = donations.map((e, i) => {
+        const rows = requests.map((e, i) => {
           return (
             <tr key={i}>
-              {/* <td>
+              <td>
                 <FaPencilAlt
                   onClick={() => {
                     handleUpdate(e);
@@ -129,27 +130,25 @@ export default function DonationManagement() {
                     handleDelete(e);
                   }}
                 />
-              </td> */}
-              <td>{e.code}</td>
-              <td>{e.itemName}</td>
-              <td>{e.quantity}</td>
-              <td>{e.donatorName}</td>
-              <td>{e.contactNo}</td>
-              <td>{e.donationStatus}</td>
+              </td>
+              <td>{e.type}</td>
+              <td>{e.requestorName}</td>
+              <td>{e.donationCode}</td>
+              <td>{e.requestStatus}</td>
             </tr>
           );
         });
 
-        setDonations(donations);
-        setDonationRows(rows);     
+        setRequests(requests);
+        setRequestRows(rows);     
         handleClose();
       });
     }
   };
 
   const handleItemName = () => {
-    console.log(refItemName)
-    let item = items.find((v) => refItemName.current.value === v._id);
+    console.log(refType)
+    let item = items.find((v) => refType.current.value === v._id);
     setItemNameToAdd(item.name);
     //console.log("itemToAdd", item.name)
   };  
@@ -159,17 +158,15 @@ export default function DonationManagement() {
       //handleItemName();
       // Add new item
       const newItem = {
-        code: refCode.current.value,
-        itemName: itemNameToAdd,
-        quantity: refQuantity.current.value,
-        donatorName: refDonatorName.current.value,
-        contactNo: refContactNo.current.value,
-        donationStatus: refDonationStatus.current.value
+        type: itemNameToAdd,
+        requestorName: refRequestorName.current.value,
+        donationCode: refDonationCode.current.value,
+        requestStatus: refRequestStatus.current.value
       };
       //console.log(newItem);
 
       // POST data
-      fetch(`${API_URL}/donations`, {
+      fetch(`${API_URL}/requests`, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -185,35 +182,33 @@ export default function DonationManagement() {
       .then(res => res.json())
       .then(json => {
         console.log("POST Result", json);
-          donations.push(json)
-          const rows = donations.map((e, i) => {
+          requests.push(json)
+          const rows = requests.map((e, i) => {
             return (
               <tr key={i}>
-                {/* <td>
+                <td>
                   <FaPencilAlt
                     onClick={() => {
                       handleUpdate(e);
                     }}
                   />
-                  &nbsp;
+                  {/* &nbsp;
                   <FaTrashAlt
                     onClick={() => {
                       handleDelete(e);
-                    }}
-                  />
-                </td> */}
-                <td>{e.code}</td>
-                <td>{e.itemName}</td>
-                <td>{e.quantity}</td>
-                <td>{e.donatorName}</td>
-                <td>{e.contactNo}</td>
-                <td>{e.donationStatus}</td>
+                    }} 
+                  /> */}
+                </td>
+                <td>{e.type}</td>
+                <td>{e.requestorName}</td>
+                <td>{e.donationCode}</td>
+                <td>{e.requestStatus}</td>
               </tr>
             );
           });
   
-          setDonations(donations);
-          setDonationRows(rows);          
+          setRequests(requests);
+          setRequestRows(rows);          
           handleClose();
       });
       
@@ -221,18 +216,16 @@ export default function DonationManagement() {
       // Update item
       const updatedItem = {
         // _id is required for updation
-        _id: donation._id,
-        code: refCode.current.value,
-        itemName: itemNameToAdd,
-        quantity: refQuantity.current.value,
-        donatorName: refDonatorName.current.value,
-        contactNo: refContactNo.current.value,
-        donationStatus: refDonationStatus.current.value
+        _id: request._id,
+        type: refType.current.value,
+        requestorName: refRequestorName.current.value,
+        donationCode: refDonationCode.current.value,
+        requestStatus: refRequestStatus.current.value
       };
       console.log(updatedItem)
 
       // PUT data
-      fetch(`${API_URL}/donations`, {
+      fetch(`${API_URL}/requests`, {
         method: "PUT", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -249,42 +242,41 @@ export default function DonationManagement() {
       .then(json => {
         // Sucessfully updated the item
         console.log("PUT Result", json)
-        for (let i=0; i<donations.length; i++) {
-          if (donations[i]._id === updatedItem._id) {
-            donations[i] = updatedItem;
+        for (let i=0; i<requests.length; i++) {
+          if (requests[i]._id === updatedItem._id) {
+            requests[i] = updatedItem;
             break;
           }
         }
       
         
-        const rows = donations.map((e, i) => {
+        const rows = requests.map((e, i) => {
             return (
               <tr key={i}>
-                {/* <td>
+                <td>
                   <FaPencilAlt
                     onClick={() => {
                       handleUpdate(e);
                     }}
                   />
-                  &nbsp;
+                  {/* &nbsp;
                   <FaTrashAlt
                     onClick={() => {
                       handleDelete(e);
-                    }}
-                  />
-                </td> */}
-                <td>{e.code}</td>
-                <td>{e.itemName}</td>
-                <td>{e.quantity}</td>
-                <td>{e.donatorName}</td>
-                <td>{e.contactNo}</td>
-                <td>{e.donationStatus}</td>
+                    }} 
+                  />*/}
+                </td>
+            
+                <td>{e.type}</td>
+                <td>{e.requestorName}</td>
+                <td>{e.donationCode}</td>
+                <td>{e.requestStatus}</td>
               </tr>
             );
           });
   
-          setDonations(donations);
-          setDonationRows(rows);     
+          setRequests(requests);
+          setRequestRows(rows);     
           handleClose();
         }); 
       }
@@ -294,31 +286,29 @@ export default function DonationManagement() {
 
   return (
     <>
-      <Container style={{ padding: "20px" }}>
-        <h1>Donation Management</h1>
+      <Container>
+        <h1>User Request Management</h1>
         {/* API_URL: {API_URL} */}
-        <Link to="/smile-givers/donation">
-          <Button variant="warning">
-            Click here to support us!
-          </Button>
-        </Link>
+        <Button variant="warning" onClick={handleShowAdd}>
+          <FaPlus /> Add
+        </Button>
         <Table striped bordered hover>
           <thead>
             <tr>
-              {/*<th style={{ width: "60px" }}>&nbsp;</th>*/}
+              <th style={{ width: "60px" }}>&nbsp;</th>
+          
+              <th className={style.textLeft}>Request Type</th>
+              <th className={style.textLeft}>Donator's Name</th>
               <th className={style.textLeft}>Donation Code</th>
-              <th className={style.textLeft}>Item Name</th>
-              <th className={style.textLeft}>Item Quantity</th>
-              <th className={style.textLeft}>Donator Name</th>
-              <th className={style.textLeft}>Contact Number</th>
-              <th className={style.textLeft}>Donation Status</th>
+              <th className={style.textLeft}>Status</th>
             </tr>
           </thead>
           <tbody>
-            {donationRows}
+            {requestRows}
           </tbody>
         </Table>
       </Container>
+
       <Modal
         show={show}
         onHide={handleClose}
@@ -327,87 +317,66 @@ export default function DonationManagement() {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {modeAdd ? "Add New Donation" : "Update Donation"}
+            {modeAdd ? "Add New Request" : "Update Request"}
           </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
           <Form>
             <Row>
-              <Col>Donation Code</Col>
+              <Col>Request Type</Col>
               <Col>
-                <Form.Control
-                type="number"
-                ref={refCode}
-                defaultValue={donation.code}
-                />
-                {/*<input type="number" ref={refQuantity} defaultValue={donation.neededAmount} />*/}
-              </Col>
-            </Row>
-            <Row>
-              <Col>Item Name</Col>
-              <Col>
-                <Form.Select ref={refItemName} onChange={handleItemName}>
-                    {itemOptions}
+                <Form.Select type="String" ref={refType} defaultValue={request.type}>
+                  <option value="Update">Update</option>
+                  <option value="Delete">Delete</option>
                 </Form.Select>
                 {/*<input type="text" ref={refItemName} defaultValue={donation.itemName} />*/}
               </Col>
             </Row>
             <Row>
-              <Col>Item Quantity</Col>
+              <Col>Donator's Name</Col>
               <Col>
                 <Form.Control
-                type="number"
-                ref={refQuantity}
-                defaultValue="1"
+                type="String"
+                ref={refRequestorName}
+                defaultValue={request.requestorName}
                 />
                 {/*<input type="number" ref={refQuantity} defaultValue={donation.neededAmount} />*/}
               </Col>
             </Row>
             <Row>
-              <Col>Donator Name</Col>
+              <Col>Donation Code</Col>
               <Col>
                 <Form.Control 
-                type="String" 
-                ref={refDonatorName}
-                placeholder="Name-Surname" 
+                type="number" 
+                ref={refDonationCode}
+                defaultValue={request.donationCode}
                 />
                 {/*<input type="text" ref={refDonatorName} defaultValue={donation.donatorName} />*/}
               </Col>
             </Row>
             <Row>
-              <Col>Contact Number</Col>
+              <Col>Status</Col>
               <Col>
-                <Form.Control 
-                type="String" 
-                ref={refContactNo}
-                placeholder="0XX-XXXXXXX"
-                />
-                {/*<input type="text" ref={refContactNo} defaultValue={donation.contactNo} />*/}
-              </Col>
-            </Row>
-            <Row>
-              <Col>Donation Status</Col>
-              <Col>
-                <Form.Select type="String" ref={refDonationStatus} defaultValue={donations.donationStatus}>
-                  <option value="-">-</option>
-                  <option value="In-Progress">In-Progress</option>
-                  <option value="Completed">Completed</option>
-                  <option value="Canceled">Canceled</option>
+                <Form.Select type="String" ref={refRequestStatus} defaultValue={request.requestStatus}>
+                  <option value="Received">Recieved</option>
+                  <option value="Success">Success</option>
+                  <option value="Failed">Failed</option>
                 </Form.Select>
+                {/*<input type="text" ref={refContactNo} defaultValue={donation.contactNo} />*/}
               </Col>
             </Row>
           </Form>
         </Modal.Body>
 
-        {/* <Modal.Footer>
+        <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
           <Button variant="primary" onClick={handleFormAction}>
             {modeAdd ? 'Add' : 'Update'}
           </Button>
-        </Modal.Footer> */}
+        </Modal.Footer>
       </Modal>
 
     </>

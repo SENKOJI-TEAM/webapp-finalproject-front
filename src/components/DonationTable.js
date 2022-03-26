@@ -16,9 +16,9 @@ function DonationTable({ data, clearDataItems, updateDataItems }) {
       // sum += amount;
       return (
         <tr key={i}>
-          <td className={style.textCenter}>
+          {/* <td className={style.textCenter}>
             <FaTrashAlt onClick={() => deleteItem(v._id)} />
-          </td>
+          </td> */}
           <td className={style.textCenter}>{v.itemName}</td>
           <td className={style.textCenter}>{v.quantity}</td>
           <td className={style.textCenter}>{v.donatorName}</td>
@@ -55,11 +55,11 @@ function DonationTable({ data, clearDataItems, updateDataItems }) {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th style={{ width: "20px" }}>&nbsp;</th>
-            <th className={style.textCenter}>Name</th>
-            <th className={style.textCenter}>Qty</th>
-            <th className={style.textCenter}>Donator</th>
-            <th className={style.textCenter}>ContactNo</th>
+            {/* <th style={{ width: "20px" }}>&nbsp;</th> */}
+            <th className={style.textLeft}>Name</th>
+            <th className={style.textLeft}>Qty</th>
+            <th className={style.textLeft}>Donator</th>
+            <th className={style.textLeft}>ContactNo</th>
           </tr>
         </thead>
         <tbody>{dataRows}</tbody>

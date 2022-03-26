@@ -16,17 +16,21 @@ export default function DonationManagement() {
   const [itemNameToAdd, setItemNameToAdd] = useState();
 
   const [donation, setDonation] = useState({
+    code: 0,
     itemName: "",
     quantity: 0,
     donatorName: "",
-    contactNo: ""
+    contactNo: "",
+    donationStatus: ""
   });
 
   // Input References
+  const refCode = useRef();
   const refItemName = useRef();
   const refQuantity = useRef();
   const refDonatorName = useRef();
   const refContactNo = useRef();
+  const refDonationStatus = useRef();
 
   useEffect(() => {
     fetch(`${API_URL}/donations`)
@@ -43,10 +47,12 @@ export default function DonationManagement() {
                 &nbsp; {/* {' '} */}
                 <FaTrashAlt onClick={() => {handleDelete(e)}} /> 
               </td>
+              <td>{e.code}</td>
               <td>{e.itemName}</td>
               <td>{e.quantity}</td>
               <td>{e.donatorName}</td>
               <td>{e.contactNo}</td>
+              <td>{e.donationStatus}</td>
             </tr>
           );
         });
@@ -61,7 +67,7 @@ export default function DonationManagement() {
 
         data = data.filter((e) => "_id" in e);
         const options = data.map((v) => (
-          <option key={v._id} value={v._id}>
+          <option key={v._id} value={v.itemName}>
             {v.name}
           </option>
         ));    
@@ -130,10 +136,12 @@ export default function DonationManagement() {
                   }}
                 />
               </td>
+              <td>{e.code}</td>
               <td>{e.itemName}</td>
               <td>{e.quantity}</td>
               <td>{e.donatorName}</td>
               <td>{e.contactNo}</td>
+              <td>{e.donationStatus}</td>
             </tr>
           );
         });
@@ -145,22 +153,28 @@ export default function DonationManagement() {
     }
   };
 
-  const handleItemName = () => {
-    console.log(refItemName)
-    let item = items.find((v) => refItemName.current.value === v._id);
-    setItemNameToAdd(item.name);
-    //console.log("itemToAdd", item.name)
-  };  
+  // const handleItemName = () => {
+  //   console.log(refItemName)
+  //   if (refItemName.current.value === "Select item name:") {
+  //     window.alert("Please select 1 item name");
+  //   } else {
+  //     let item = items.find((v) => refItemName.current.value === v._id);
+  //     setItemNameToAdd(item.name);
+  //     console.log("itemToAdd", item.name)
+  //   }
+  // };  
 
   const handleFormAction = () => {
     if (modeAdd) {
-      //handleItemName();
+      // handleItemName();
       // Add new item
       const newItem = {
-        itemName: itemNameToAdd,
+        code: refCode.current.value,
+        itemName: refItemName.current.value,
         quantity: refQuantity.current.value,
         donatorName: refDonatorName.current.value,
-        contactNo: refContactNo.current.value
+        contactNo: refContactNo.current.value,
+        donationStatus: refDonationStatus.current.value
       };
       //console.log(newItem);
 
@@ -198,10 +212,12 @@ export default function DonationManagement() {
                     }}
                   />
                 </td>
+                <td>{e.code}</td>
                 <td>{e.itemName}</td>
                 <td>{e.quantity}</td>
                 <td>{e.donatorName}</td>
                 <td>{e.contactNo}</td>
+                <td>{e.donationStatus}</td>
               </tr>
             );
           });
@@ -216,10 +232,12 @@ export default function DonationManagement() {
       const updatedItem = {
         // _id is required for updation
         _id: donation._id,
+        code: refCode.current.value,
         itemName: refItemName.current.value,
         quantity: refQuantity.current.value,
         donatorName: refDonatorName.current.value,
-        contactNo: refContactNo.current.value
+        contactNo: refContactNo.current.value,
+        donationStatus: refDonationStatus.current.value
       };
       console.log(updatedItem)
 
@@ -265,11 +283,12 @@ export default function DonationManagement() {
                     }}
                   />
                 </td>
-            
+                <td>{e.code}</td>
                 <td>{e.itemName}</td>
                 <td>{e.quantity}</td>
                 <td>{e.donatorName}</td>
                 <td>{e.contactNo}</td>
+                <td>{e.donationStatus}</td>
               </tr>
             );
           });
@@ -288,18 +307,19 @@ export default function DonationManagement() {
       <Container>
         <h1>Donation Management</h1>
         {/* API_URL: {API_URL} */}
-        <Button variant="outline-dark" onClick={handleShowAdd}>
+        <Button variant="warning" onClick={handleShowAdd}>
           <FaPlus /> Add
         </Button>
         <Table striped bordered hover>
           <thead>
             <tr>
               <th style={{ width: "60px" }}>&nbsp;</th>
-          
+              <th className={style.textLeft}>Donation Code</th>
               <th className={style.textLeft}>Item Name</th>
               <th className={style.textLeft}>Item Quantity</th>
               <th className={style.textLeft}>Donator Name</th>
               <th className={style.textLeft}>Contact Number</th>
+              <th className={style.textLeft}>Donation Status</th>
             </tr>
           </thead>
           <tbody>
@@ -307,7 +327,6 @@ export default function DonationManagement() {
           </tbody>
         </Table>
       </Container>
-
       <Modal
         show={show}
         onHide={handleClose}
@@ -316,16 +335,26 @@ export default function DonationManagement() {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {modeAdd ? "Add New Item" : "Update item"}
+            {modeAdd ? "Add New Donation" : "Update Donation"}
           </Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
           <Form>
             <Row>
+              <Col>Donation Code</Col>
+              <Col>
+                <Form.Control
+                type="number"
+                ref={refCode}
+                defaultValue={donation.code}
+                />
+                {/*<input type="number" ref={refQuantity} defaultValue={donation.neededAmount} />*/}
+              </Col>
+            </Row>
+            <Row>
               <Col>Item Name</Col>
               <Col>
-                <Form.Select ref={refItemName} onChange={handleItemName}>
+                <Form.Select type="String" defaultValue={donation.itemName} ref={refItemName}>
                     {itemOptions}
                 </Form.Select>
                 {/*<input type="text" ref={refItemName} defaultValue={donation.itemName} />*/}
@@ -337,7 +366,7 @@ export default function DonationManagement() {
                 <Form.Control
                 type="number"
                 ref={refQuantity}
-                defaultValue="1"
+                defaultValue={donation.quantity}
                 />
                 {/*<input type="number" ref={refQuantity} defaultValue={donation.neededAmount} />*/}
               </Col>
@@ -348,7 +377,7 @@ export default function DonationManagement() {
                 <Form.Control 
                 type="String" 
                 ref={refDonatorName}
-                placeholder="Name-Surname" 
+                defaultValue={donation.donatorName}
                 />
                 {/*<input type="text" ref={refDonatorName} defaultValue={donation.donatorName} />*/}
               </Col>
@@ -359,9 +388,20 @@ export default function DonationManagement() {
                 <Form.Control 
                 type="String" 
                 ref={refContactNo}
-                placeholder="0XX-XXXXXXX"
+                defaultValue={donation.contactNo}
                 />
                 {/*<input type="text" ref={refContactNo} defaultValue={donation.contactNo} />*/}
+              </Col>
+            </Row>
+            <Row>
+              <Col>Donation Status</Col>
+              <Col>
+                <Form.Select type="String" ref={refDonationStatus} defaultValue={donation.donationStatus}>
+                  <option value="-">-</option>
+                  <option value="In-Progress">In-Progress</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Canceled">Canceled</option>
+                </Form.Select>
               </Col>
             </Row>
           </Form>
