@@ -137,7 +137,7 @@ export default function ItemManagement() {
         window.alert("This item already exists.")
         return false;
       }
-      if (newItem.need <= 0) {
+      if (newItem.neededAmount <= 0) {
         window.alert("Item's need amount must be at least 1.")
         return false;
       }
