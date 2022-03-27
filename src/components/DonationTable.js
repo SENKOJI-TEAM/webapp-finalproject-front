@@ -16,14 +16,14 @@ function DonationTable({ data, clearDataItems, updateDataItems }) {
       // sum += amount;
       return (
         <tr key={i}>
-          {/* <td className={style.textCenter}>
-            <FaTrashAlt onClick={() => deleteItem(v._id)} />
-          </td> */}
+          <td className={style.textCenter}>
+            <FaTrashAlt onClick={() => deleteItem(v.code)} />
+          </td>
           {/* <td className={style.textCenter}>{v.code}</td> */}
-          <td className={style.textCenter}>{v.itemName}</td>
-          <td className={style.textCenter}>{v.quantity}</td>
-          <td className={style.textCenter}>{v.donatorName}</td>
-          <td className={style.textCenter}>{v.contactNo}</td>
+          <td className={style.textLeft}>{v.itemName}</td>
+          <td className={style.textLeft}>{v.quantity}</td>
+          <td className={style.textLeft}>{v.donatorName}</td>
+          <td className={style.textLeft}>{v.contactNo}</td>
         </tr>
       );
     });
@@ -32,10 +32,13 @@ function DonationTable({ data, clearDataItems, updateDataItems }) {
     //setTotal(sum);
   }, [data]);
 
-  const deleteItem = (_id => {
-    var z = data.filter((value, index, arr) => value._id != _id);
+  const deleteItem = (code) => {
+    if (window.confirm(`Are you sure to delete your recent donation "${code}"? from your local storage`)) {
+
+    }
+    var z = data.filter((value, index, arr) => value.code !== code);
     updateDataItems(z);
-  });
+  };
 
   const clearTable = () => {
     clearDataItems();
@@ -49,17 +52,17 @@ function DonationTable({ data, clearDataItems, updateDataItems }) {
 
   return (
     <div>
-      <h1>Recent Donation</h1>
+      <h1>Your Recent Donation</h1>
       {/* <Button onClick={clearTable} variant="outline-dark">
         Clear
       </Button> */}
       <Table striped bordered hover variant="warning">
         <thead>
           <tr>
-            {/* <th style={{ width: "20px" }}>&nbsp;</th> */}
+            <th style={{ width: "20px" }}>&nbsp;</th>
             {/* <th className={style.textLeft}>Code</th> */}
             <th className={style.textLeft}>Name</th>
-            <th className={style.textLeft}>Qty</th>
+            <th className={style.textLeft}>Quantity</th>
             <th className={style.textLeft}>Donator</th>
             <th className={style.textLeft}>ContactNo</th>
           </tr>

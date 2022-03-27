@@ -202,8 +202,8 @@ function UserRequest() {
           </Row>
 
           <Row>
-            <Col>
-              <Form.Label style={{fontWeight:"bold", paddingBottom:"10px"}}>Donation Code</Form.Label>
+            <Col style={{fontWeight:"bold", paddingBottom:"10px"}}>
+              <Form.Label>Donation Code</Form.Label>
               <Form.Control 
               type="number" 
               ref={donationCodeRef}

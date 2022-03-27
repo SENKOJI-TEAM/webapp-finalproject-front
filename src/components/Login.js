@@ -44,7 +44,7 @@ export function Login({ email, password, onLogin }) {
             We'll never share your email with anyone else.
           </Form.Text> */}
 
-          <Form.Label style={{fontWeight:"bold"}}>Password</Form.Label>
+          <Form.Label style={{fontWeight:"bold", paddingTop:"10px"}}>Password</Form.Label>
           <Form.Control
             type="password"
             placeholder="Enter password"
