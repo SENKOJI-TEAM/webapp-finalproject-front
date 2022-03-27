@@ -43,7 +43,15 @@ This application is used to manage item donation requesting process with regards
 ### FUNTIONALITIES
 > CRUD = CREATE, READ, UPDATE, DELETE <br />
 > Rest API = GET, POST, PUT, PATCH, DELETE
+
+THE WEBSITE IS DIVIDED FOR TWO STAKEHOLDERS (ADMIN & DONATOR)
+The main web page is for users who are donators.
+For admins, system log-in is required. (The web page shown will be different from regular users.)
+However, log-in system is provided for both stakeholders.
+
 1. **Admin/Distributor** <br />
+   > email: admin@hotmail.com
+   > password: adminishere
    can..
    - add needed items (POST)
    - update needed items (PUT, PATCH)
@@ -53,6 +61,8 @@ This application is used to manage item donation requesting process with regards
    - remove donation requests after receiving donated items (DELETE) 
      > *donation acceptance is done outside the system*
 2. **Donator/Supporter** <br />
+   > email: donator@hotmail.com
+   > password: donatorishere
    can..
    - check for needed items (GET)
    - donate items (POST)
@@ -67,6 +77,9 @@ This project uses **MERN** Stack for implementation.
 > Front-end : React.js <br />
 > Back-end : Express.js
 
+----------------------------------------------------
+
+TO TEST THE CODE ON YOUR LOCAL DEVICE:
 First, please make sure you have installed the followings:
 - Node.js (JavaScript Run-time) <br />
   https://nodejs.org/en/download/
@@ -84,7 +97,6 @@ And, make sure to install the project dependency in both backend and frontend pr
   ```
   yarn
   ```
-
 HOW TO RUN THIS APP?
 1. **Back-end**
    ```
