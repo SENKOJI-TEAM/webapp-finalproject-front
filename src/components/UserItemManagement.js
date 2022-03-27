@@ -270,14 +270,14 @@ export default function UserItemManagement() {
 
   return (
     <>
-      <Container style={{ padding: "20px" }}>
-        <h1>Items</h1>
-        <h5>Thank you for your support!</h5>
+      <Container style={{ padding: "20px", width:"90%", fontFamily:"century gothic", fontSize:"110%" }}>
+        <h1>Needed Items</h1>
+        <h6>These items are currently in need:</h6>
         {/* API_URL: {API_URL} */}
         {/* <Button variant="outline-dark" onClick={handleShowAdd}>
           <FaPlus /> Add
         </Button> */}
-        <Table striped bordered hover>
+        <Table striped bordered hover variant="warning">
           <thead>
             <tr>
               {/*<th style={{ width: "60px" }}>&nbsp;</th>*/}

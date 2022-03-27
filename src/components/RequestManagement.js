@@ -288,13 +288,13 @@ export default function RequestManagement() {
 
   return (
     <>
-      <Container style={{ padding: "20px" }}>
+      <Container style={{ padding: "20px", fontFamily:"century gothic" }}>
         <h1>User Request Management</h1>
         {/* API_URL: {API_URL} */}
-        <Button variant="warning" onClick={handleShowAdd}>
+        <Button variant="success" style={{fontWeight:"bold"}} onClick={handleShowAdd}>
           <FaPlus /> Add
         </Button>
-        <Table striped bordered hover>
+        <Table striped bordered hover variant="warning">
           <thead>
             <tr>
               <th style={{ width: "60px" }}>&nbsp;</th>
@@ -316,6 +316,7 @@ export default function RequestManagement() {
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        style={{fontFamily:"century gothic", fontWeight:"bold"}}
       >
         <Modal.Header closeButton>
           <Modal.Title>

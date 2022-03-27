@@ -294,15 +294,15 @@ export default function DonationManagement() {
 
   return (
     <>
-      <Container style={{ padding: "20px" }}>
+      <Container style={{ padding: "20px", width:"90%", fontFamily:"century gothic"}}>
         <h1>Donations</h1>
         {/* API_URL: {API_URL} */}
         <Link to="/smile-givers/donation">
-          <Button variant="warning">
+          <Button variant="success">
             Click here to support us!
           </Button>
         </Link>
-        <Table striped bordered hover>
+        <Table striped bordered hover variant="warning">
           <thead>
             <tr>
               {/*<th style={{ width: "60px" }}>&nbsp;</th>*/}

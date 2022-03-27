@@ -53,7 +53,7 @@ function DonationTable({ data, clearDataItems, updateDataItems }) {
       {/* <Button onClick={clearTable} variant="outline-dark">
         Clear
       </Button> */}
-      <Table striped bordered hover>
+      <Table striped bordered hover variant="warning">
         <thead>
           <tr>
             {/* <th style={{ width: "20px" }}>&nbsp;</th> */}

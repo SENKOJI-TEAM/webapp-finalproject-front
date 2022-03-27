@@ -167,13 +167,13 @@ function UserRequest() {
 
   return (
     <Container>
-      <Row style={{ padding: "20px" }}>
-        <Col style={{ backgroundColor: "#e4e4e4", padding: "15px" }}>
+      <Row style={{ padding: "20px", fontFamily:"century gothic" }}>
+        <Col style={{ backgroundColor: "#ADD8E6", padding: "15px" }}>
 
           <Row>
-            <Col>
-              Type of Request
-              <div className="custom-select" style={{ backgroundColor: "width:20px" }}>
+            <Col style={{paddingBottom:"10px", fontWeight:"bold"}}>
+              <Form.Label style={{fontWeight:"bold"}}>Type of Request</Form.Label>
+              <div className="custom-select" >
                 <Form.Select type="String" ref={typeRef}>
                   <option value="Select your request type:">Select your request type:</option>
                   <option value="Update">Update</option>
@@ -184,8 +184,8 @@ function UserRequest() {
           </Row>
 
           <Row>
-            <Col>
-              <Form.Label>Requestor's Name</Form.Label>
+            <Col style={{paddingBottom:"10px", fontWeight:"bold"}}>
+              <Form.Label style={{fontWeight:"bold"}}>Requestor's Name</Form.Label>
               <Form.Control
                 type="String"
                 ref={requestorNameRef}
@@ -197,7 +197,7 @@ function UserRequest() {
 
           <Row>
             <Col>
-              <Form.Label>Donation Code</Form.Label>
+              <Form.Label style={{fontWeight:"bold"}}>Donation Code</Form.Label>
               <Form.Control 
               type="number" 
               ref={donationCodeRef}
@@ -212,6 +212,7 @@ function UserRequest() {
           <div className="d-grid gap-2">
             <Button variant="success" 
             onClick={requestFunctions}
+            style={{fontWeight:"bold"}}
             >
               Submit Request
             </Button>

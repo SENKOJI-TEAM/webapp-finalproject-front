@@ -180,7 +180,7 @@ export default function DonationManagement() {
       window.alert("Contact number is empty")
       return false;
     } else if (updatedStatus === "-") {
-      window.alert("Status is "-"")
+      window.alert("Status is now unspecified")
       if (!window.confirm("Are you sure to proceed?")) {
         return false
       }
@@ -331,13 +331,13 @@ export default function DonationManagement() {
 
   return (
     <>
-      <Container style={{ padding: "20px" }}>
+      <Container style={{ padding: "20px", fontFamily:"century gothic" }}>
         <h1>Donation Management</h1>
         {/* API_URL: {API_URL} */}
-        <Button variant="warning" onClick={handleShowAdd}>
+        <Button variant="success" style={{fontWeight:"bold"}} onClick={handleShowAdd}>
           <FaPlus /> Add
         </Button>
-        <Table striped bordered hover>
+        <Table striped bordered hover variant="warning">
           <thead>
             <tr>
               <th style={{ width: "60px" }}>&nbsp;</th>
@@ -359,6 +359,7 @@ export default function DonationManagement() {
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        style={{fontFamily:"century gothic", fontWeight:"bold" }}
       >
         <Modal.Header closeButton>
           <Modal.Title>

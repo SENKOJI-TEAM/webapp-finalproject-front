@@ -75,9 +75,9 @@ function App() {
   if (JSON.parse(window.localStorage.getItem('logInMode'))) {
     return (
     <Router>
-      <Navbar bg="dark" variant="dark">
+      <Navbar style={{backgroundColor:"#FFA199", padding:"10px", fontFamily:"segoe print", color:"black", fontSize:"120%"}}>
         <Container>
-          <Navbar.Brand href="#home">SMILE GIVERS</Navbar.Brand>
+          <Navbar.Brand href="#home" style={{fontSize:"150%", fontWeight:"bold"}}>SMILE GIVERS</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/smile-givers">
               Log-In
@@ -132,9 +132,9 @@ function App() {
     if (JSON.parse(window.localStorage.getItem('isAdmin'))) {
       return (
       <Router>
-        <Navbar bg="dark" variant="dark">
-          <Container>
-            <Navbar.Brand href="#home">SMILE GIVERS</Navbar.Brand>
+        <Navbar style={{backgroundColor:"#FFA199", padding:"10px", fontFamily:"segoe print", color:"black", fontSize:"120%"}}>
+        <Container>
+          <Navbar.Brand href="#home" style={{fontSize:"150%", fontWeight:"bold"}}>SMILE GIVERS</Navbar.Brand>
             <Nav className="me-auto">
               <Nav.Link href="/smile-givers">
                 Log-In
@@ -175,9 +175,9 @@ function App() {
     } else if (!JSON.parse(window.localStorage.getItem('isAdmin'))) {
       return (
     <Router>
-      <Navbar bg="dark" variant="dark">
+      <Navbar style={{backgroundColor:"#FFA199", padding:"10px", fontFamily:"segoe print", color:"black", fontSize:"120%"}}>
         <Container>
-          <Navbar.Brand href="#home">SMILE GIVERS</Navbar.Brand>
+          <Navbar.Brand href="#home" style={{fontSize:"150%", fontWeight:"bold"}}>SMILE GIVERS</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/smile-givers">
               Log-In

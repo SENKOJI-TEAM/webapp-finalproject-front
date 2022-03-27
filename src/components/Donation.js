@@ -175,23 +175,27 @@ function Donation() {
     } 
   };
 
-  return (
-    <Container style={{ padding: "20px" }}>
-      <Row>
-        <Col md={4} style={{ backgroundColor: "#e4e4e4" }}>
+  // const hoverStyle = {
+  //   backgroundColor:"red"
+  // }
 
-          <Row>
+  return (
+    <Container style={{ padding: "20px", fontFamily:"century gothic" }}>
+      <Row>
+        <Col md={4} style={{ backgroundColor: "#ADD8E6", padding:"15px" }}>
+
+          <Row style={{paddingBottom:"10px"}}>
             <Col>
-              Item for Donation
+              <Form.Label style={{fontWeight:"bold"}}>Item for Donation</Form.Label>
               <Form.Select ref={itemRef} onChange={itemChange}>
                 {itemOptions}
               </Form.Select>
             </Col>
           </Row>
 
-          <Row>
+          <Row style={{paddingBottom:"10px"}}>
             <Col>
-              <Form.Label>Quantity</Form.Label>
+              <Form.Label style={{fontWeight:"bold"}}>Quantity</Form.Label>
               <Form.Control
                 type="number"
                 ref={quantityRef}
@@ -202,9 +206,9 @@ function Donation() {
             </Col>
           </Row>
 
-          <Row>
+          <Row style={{paddingBottom:"10px"}}>
             <Col>
-              <Form.Label>Donator's Name</Form.Label>
+              <Form.Label  style={{fontWeight:"bold"}}>Donator's Name</Form.Label>
               <Form.Control 
               type="String" 
               ref={donatorNameRef}
@@ -215,7 +219,7 @@ function Donation() {
 
           <Row>
             <Col>
-              <Form.Label>Contact</Form.Label>
+              <Form.Label style={{fontWeight:"bold"}}>Contact</Form.Label>
               <Form.Control 
               type="String" 
               ref={contactNoRef}
@@ -229,6 +233,7 @@ function Donation() {
           <div className="d-grid gap-2">
             <Button variant="success" 
             onClick={donateFunctions}
+            style={{fontWeight:"bold"}}
             >
               Donate
             </Button>
