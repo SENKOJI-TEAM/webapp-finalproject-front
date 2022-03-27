@@ -44,9 +44,9 @@ This application is used to manage item donation requesting process with regards
 > CRUD = CREATE, READ, UPDATE, DELETE <br />
 > Rest API = GET, POST, PUT, PATCH, DELETE
 
-THE WEBSITE IS DIVIDED FOR TWO STAKEHOLDERS (ADMIN & DONATOR)
-The main web page is for users who are donators.
-For admins, system log-in is required. (The web page shown will be different from regular users.)
+THE WEBSITE IS DIVIDED FOR TWO STAKEHOLDERS (ADMIN & DONATOR) <br />
+The main web page is for users who are donators. <br />
+For admins, system log-in is required. (The web page shown will be different from regular users.) <br />
 However, log-in system is provided for both stakeholders.
 
 1. **Admin/Distributor** <br />
