@@ -375,7 +375,7 @@ export default function DonationManagement() {
                 <Form.Control
                 type="number"
                 ref={refCode}
-                defaultValue={donation.code}
+                placeholder="<Auto random>"
                 disabled
                 />
                 {/*<input type="number" ref={refQuantity} defaultValue={donation.neededAmount} />*/}
