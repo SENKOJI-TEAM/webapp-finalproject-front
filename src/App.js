@@ -82,17 +82,17 @@ function App() {
             <Nav.Link href="/smile-givers">
               Log-In
             </Nav.Link>
-            <Nav.Link href="/smile-givers/donation">
-              Donate
-            </Nav.Link>
-            <Nav.Link href="/smile-givers/user-request">
-              Request
-            </Nav.Link>
             <Nav.Link href="/smile-givers/user-item-management">
               Item
             </Nav.Link>
             <Nav.Link href="/smile-givers/user-donation-management">
               Donation
+            </Nav.Link>
+            <Nav.Link href="/smile-givers/donation">
+              Donate
+            </Nav.Link>
+            <Nav.Link href="/smile-givers/user-request">
+              Request
             </Nav.Link>
           </Nav>
         </Container>
@@ -139,14 +139,14 @@ function App() {
               <Nav.Link href="/smile-givers">
                 Log-In
               </Nav.Link>
-              <Nav.Link href="/smile-givers/request-management">
-                Request Management
-              </Nav.Link>
               <Nav.Link href="/smile-givers/item-management">
                 Item Management
               </Nav.Link>
               <Nav.Link href="/smile-givers/donation-management">
                 Donation Management
+              </Nav.Link>
+              <Nav.Link href="/smile-givers/request-management">
+                Request Management
               </Nav.Link>
             </Nav>
           </Container>
@@ -182,17 +182,17 @@ function App() {
             <Nav.Link href="/smile-givers">
               Log-In
             </Nav.Link>
-            <Nav.Link href="/smile-givers/donation">
-              Donate
-            </Nav.Link>
-            <Nav.Link href="/smile-givers/user-request">
-              Request
-            </Nav.Link>
             <Nav.Link href="/smile-givers/user-item-management">
               Item
             </Nav.Link>
             <Nav.Link href="/smile-givers/user-donation-management">
               Donation
+            </Nav.Link>
+            <Nav.Link href="/smile-givers/donation">
+              Donate
+            </Nav.Link>
+            <Nav.Link href="/smile-givers/user-request">
+              Request
             </Nav.Link>
           </Nav>
         </Container>

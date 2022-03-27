@@ -129,6 +129,10 @@ export default function ItemManagement() {
     let newItem = u;
 
     for (let i = 0; i < data.length; i++) {
+      if (newItem.name === "") {
+        window.alert("Item name is empty")
+        return false;
+      }
       if (newItem.name === data[i].name) {
         window.alert("This item already exists.")
         return false;
