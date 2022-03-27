@@ -19,6 +19,7 @@ export default function RequestManagement() {
     type: "",
     requestorName: "",
     donationCode: "",
+    detail: "",
     requestStatus: ""
   });
 
@@ -26,6 +27,7 @@ export default function RequestManagement() {
   const refType = useRef();
   const refRequestorName = useRef();
   const refDonationCode = useRef();
+  const refDetail = useRef();
   const refRequestStatus = useRef();
 
   useEffect(() => {
@@ -46,6 +48,7 @@ export default function RequestManagement() {
               <td>{e.type}</td>
               <td>{e.requestorName}</td>
               <td>{e.donationCode}</td>
+              <td>{e.detail}</td>
               <td>{e.requestStatus}</td>
             </tr>
           );
@@ -135,6 +138,7 @@ export default function RequestManagement() {
               <td>{e.type}</td>
               <td>{e.requestorName}</td>
               <td>{e.donationCode}</td>
+              <td>{e.detail}</td>
               <td>{e.requestStatus}</td>
             </tr>
           );
@@ -162,6 +166,7 @@ export default function RequestManagement() {
         type: refType.current.value,
         requestorName: refRequestorName.current.value,
         donationCode: refDonationCode.current.value,
+        detail: refDetail.current.value,
         requestStatus: refRequestStatus.current.value
       };
       //console.log(newItem);
@@ -203,6 +208,7 @@ export default function RequestManagement() {
                 <td>{e.type}</td>
                 <td>{e.requestorName}</td>
                 <td>{e.donationCode}</td>
+                <td>{e.detail}</td>
                 <td>{e.requestStatus}</td>
               </tr>
             );
@@ -221,6 +227,7 @@ export default function RequestManagement() {
       type: refType.current.value,
       requestorName: refRequestorName.current.value,
       donationCode: refDonationCode.current.value,
+      detail: refDetail.current.value,
       requestStatus: refRequestStatus.current.value
       };
       console.log(updatedItem)
@@ -271,6 +278,7 @@ export default function RequestManagement() {
                 <td>{e.type}</td>
                 <td>{e.requestorName}</td>
                 <td>{e.donationCode}</td>
+                <td>{e.detail}</td>
                 <td>{e.requestStatus}</td>
               </tr>
             );
@@ -298,10 +306,10 @@ export default function RequestManagement() {
           <thead>
             <tr>
               <th style={{ width: "60px" }}>&nbsp;</th>
-          
               <th className={style.textLeft}>Request Type</th>
               <th className={style.textLeft}>Donator's Name</th>
-              <th className={style.textLeft}>Donation Code</th>
+              <th className={style.textLeft}>Code</th>
+              <th className={style.textLeft}>Detail</th>
               <th className={style.textLeft}>Status</th>
             </tr>
           </thead>
@@ -348,13 +356,24 @@ export default function RequestManagement() {
               </Col>
             </Row>
             <Row>
-              <Col>Donation Code</Col>
+              <Col>Code</Col>
               <Col>
                 <Form.Control 
                 type="number" 
                 ref={refDonationCode}
                 defaultValue={request.donationCode}
                 disabled
+                />
+                {/*<input type="text" ref={refDonatorName} defaultValue={donation.donatorName} />*/}
+              </Col>
+            </Row>
+            <Row>
+              <Col>Detail</Col>
+              <Col>
+                <Form.Control 
+                type="String" 
+                ref={refDetail}
+                defaultValue={request.detail}
                 />
                 {/*<input type="text" ref={refDonatorName} defaultValue={donation.donatorName} />*/}
               </Col>

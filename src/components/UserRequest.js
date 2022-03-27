@@ -23,6 +23,7 @@ function UserRequest() {
   const typeRef = useRef();
   const requestorNameRef = useRef();
   const donationCodeRef = useRef();
+  const detailRef = useRef();
   //const requestStatusRef = useRef();
 
   const [localDataItems, setLocalDataItems, remove] = useLocalStorage(
@@ -95,7 +96,8 @@ function UserRequest() {
           type: typeRef.current.value,
           requestorName: requestorNameRef.current.value,
           donationCode: donationCodeRef.current.value,
-          requestStatus: "Received"
+          requestStatus: "Received",
+          detail: detailRef.current.value
       };
       //console.log(newDonation);
 
@@ -136,6 +138,7 @@ function UserRequest() {
     let type = typeRef.current.value;
     let donationCode = donationCodeRef.current.value;
     let requestorName = requestorNameRef.current.value;
+    let detail = detailRef.current.value;
 
     console.log(type)
 
@@ -148,7 +151,10 @@ function UserRequest() {
     } else if (donationCode === "") {
       window.alert("Please fill the donation code.")
       return false;
-    } 
+    }  else if (detail === "") {
+      window.alert("Please fill the detail.")
+      return false;
+    }
     return true;
   };
 
@@ -197,12 +203,23 @@ function UserRequest() {
 
           <Row>
             <Col>
-              <Form.Label style={{fontWeight:"bold"}}>Donation Code</Form.Label>
+              <Form.Label style={{fontWeight:"bold", paddingBottom:"10px"}}>Donation Code</Form.Label>
               <Form.Control 
               type="number" 
               ref={donationCodeRef}
               placeholder="XXXX"
               defaultValue="1" 
+              />
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <Form.Label style={{fontWeight:"bold"}}>Detail</Form.Label>
+              <Form.Control 
+              type="String" 
+              ref={detailRef}
+              placeholder="(e.g., Increase quantity to 100)"
               />
             </Col>
           </Row>
