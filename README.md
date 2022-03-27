@@ -1,4 +1,5 @@
 # SMILE GIVERS APP (Front-End)
+https://smile-givers.herokuapp.com/smile-givers/
 ----------------------------------------------------
 
 ## COURSE INFO
@@ -11,6 +12,7 @@ Assignment : Final Project
 ## TEAM MEMBERS 
 - SUTISAN NILRATTANAKUL (6213221) <br />
 - WANITCHA SRITHONGCHUAY (6213365) 
+Note: Contribution of this project was mainly implemented in code live share of VSCode, but only 1 person committed the code into GitHub 
 
 ----------------------------------------------------
 
