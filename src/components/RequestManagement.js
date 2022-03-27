@@ -362,7 +362,6 @@ export default function RequestManagement() {
                 type="number" 
                 ref={refDonationCode}
                 defaultValue={request.donationCode}
-                disabled
                 />
                 {/*<input type="text" ref={refDonatorName} defaultValue={donation.donatorName} />*/}
               </Col>

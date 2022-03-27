@@ -376,6 +376,7 @@ export default function DonationManagement() {
                 type="number"
                 ref={refCode}
                 placeholder="<Auto random>"
+                defaultValue={donation.code}
                 disabled
                 />
                 {/*<input type="number" ref={refQuantity} defaultValue={donation.neededAmount} />*/}
