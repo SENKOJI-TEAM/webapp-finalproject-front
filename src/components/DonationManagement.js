@@ -193,9 +193,10 @@ export default function DonationManagement() {
     if (donationIsValid) {
       if (modeAdd) {
       // handleItemName();
+      let randomizedCode = Math.floor(Math.random() * 1000000) + 1;
       // Add new item
       const newItem = {
-        code: refCode.current.value,
+        code: randomizedCode,
         itemName: refItemName.current.value,
         quantity: refQuantity.current.value,
         donatorName: refDonatorName.current.value,
