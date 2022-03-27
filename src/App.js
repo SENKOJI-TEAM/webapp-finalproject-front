@@ -26,6 +26,7 @@ function App() {
   const [user, setUser] = useState();
   const [logInMode, setLogInMode] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [currentUsername, setUsername] = useState();
 
   const handleLogin = (data) => {
     console.log('handleLogin',data)
@@ -63,13 +64,14 @@ function App() {
         }
         console.log("data:", data)
         setUser(data)
+        setUsername(data.username)
         console.log("current login mode", localStorage.getItem('logInMode'))
         console.log("current admin mode", localStorage.getItem('isAdmin'))
       }
     })
     ;
   };
-
+  
   if (JSON.parse(window.localStorage.getItem('logInMode'))) {
     return (
     <Router>

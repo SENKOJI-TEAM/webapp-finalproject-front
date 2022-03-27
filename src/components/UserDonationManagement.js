@@ -295,7 +295,7 @@ export default function DonationManagement() {
   return (
     <>
       <Container style={{ padding: "20px" }}>
-        <h1>Donation Management</h1>
+        <h1>Donations</h1>
         {/* API_URL: {API_URL} */}
         <Link to="/smile-givers/donation">
           <Button variant="warning">

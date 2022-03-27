@@ -103,7 +103,7 @@ export default function DonationManagement() {
   const handleDelete = (donation) => {
     console.log("Delete Donation", donation._id)
     // way to pop up confirmation modal (html-style)
-    if (window.confirm(`Are you sure to delete "${donation.itemName}"?`)) {
+    if (window.confirm(`Are you sure to delete Donation ID "${donation.code}"?`)) {
       // DELETE data
       fetch(`${API_URL}/donations/${donation._id}`, {
         method: "DELETE", // *GET, POST, PUT, DELETE, etc.
@@ -164,8 +164,34 @@ export default function DonationManagement() {
   //   }
   // };  
 
+  const validateDonation = () => {
+    let updatedQuantity = refQuantity.current.value;
+    let updatedDonatorName = refDonatorName.current.value;
+    let updatedContact = refContactNo.current.value;
+    let updatedStatus = refDonationStatus.current.value;
+
+    if (updatedQuantity <= 0) {
+      window.alert("Donation quantity must be at least 1.")
+      return false;
+    } else if (updatedDonatorName === "") {
+      window.alert("Donator name is empty")
+      return false;
+    } else if (updatedContact === "") {
+      window.alert("Contact number is empty")
+      return false;
+    } else if (updatedStatus === "-") {
+      window.alert("Status is "-"")
+      if (!window.confirm("Are you sure to proceed?")) {
+        return false
+      }
+    } 
+    return true;
+  };
+
   const handleFormAction = () => {
-    if (modeAdd) {
+    let donationIsValid = validateDonation();
+    if (donationIsValid) {
+      if (modeAdd) {
       // handleItemName();
       // Add new item
       const newItem = {
@@ -227,84 +253,85 @@ export default function DonationManagement() {
           handleClose();
       });
       
-    } else {
-      // Update item
-      const updatedItem = {
-        // _id is required for updation
-        _id: donation._id,
-        code: refCode.current.value,
-        itemName: refItemName.current.value,
-        quantity: refQuantity.current.value,
-        donatorName: refDonatorName.current.value,
-        contactNo: refContactNo.current.value,
-        donationStatus: refDonationStatus.current.value
-      };
-      console.log(updatedItem)
+      } else {
+        // Update item
+        const updatedItem = {
+          // _id is required for updation
+          _id: donation._id,
+          code: refCode.current.value,
+          itemName: refItemName.current.value,
+          quantity: refQuantity.current.value,
+          donatorName: refDonatorName.current.value,
+          contactNo: refContactNo.current.value,
+          donationStatus: refDonationStatus.current.value
+        };
+        console.log(updatedItem)
 
-      // PUT data
-      fetch(`${API_URL}/donations`, {
-        method: "PUT", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, *cors, same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        // credentials: "same-origin", // include, *same-origin, omit
-        headers: {
-          "Content-Type": "application/json",
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        redirect: "follow", // manual, *follow, error
-        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(updatedItem), // body data type must match "Content-Type" header
-      })
-      .then(res => res.json())
-      .then(json => {
-        // Sucessfully updated the item
-        console.log("PUT Result", json)
-        for (let i=0; i<donations.length; i++) {
-          if (donations[i]._id === updatedItem._id) {
-            donations[i] = updatedItem;
-            break;
+        // PUT data
+        fetch(`${API_URL}/donations`, {
+          method: "PUT", // *GET, POST, PUT, DELETE, etc.
+          mode: "cors", // no-cors, *cors, same-origin
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          // credentials: "same-origin", // include, *same-origin, omit
+          headers: {
+            "Content-Type": "application/json",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          redirect: "follow", // manual, *follow, error
+          referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          body: JSON.stringify(updatedItem), // body data type must match "Content-Type" header
+        })
+        .then(res => res.json())
+        .then(json => {
+          // Sucessfully updated the item
+          console.log("PUT Result", json)
+          for (let i=0; i<donations.length; i++) {
+            if (donations[i]._id === updatedItem._id) {
+              donations[i] = updatedItem;
+              break;
+            }
           }
+        
+          
+          const rows = donations.map((e, i) => {
+              return (
+                <tr key={i}>
+                  <td>
+                    <FaPencilAlt
+                      onClick={() => {
+                        handleUpdate(e);
+                      }}
+                    />
+                    &nbsp;
+                    <FaTrashAlt
+                      onClick={() => {
+                        handleDelete(e);
+                      }}
+                    />
+                  </td>
+                  <td>{e.code}</td>
+                  <td>{e.itemName}</td>
+                  <td>{e.quantity}</td>
+                  <td>{e.donatorName}</td>
+                  <td>{e.contactNo}</td>
+                  <td>{e.donationStatus}</td>
+                </tr>
+              );
+            });
+    
+            setDonations(donations);
+            setDonationRows(rows);     
+            handleClose();
+          }); 
         }
       
-        
-        const rows = donations.map((e, i) => {
-            return (
-              <tr key={i}>
-                <td>
-                  <FaPencilAlt
-                    onClick={() => {
-                      handleUpdate(e);
-                    }}
-                  />
-                  &nbsp;
-                  <FaTrashAlt
-                    onClick={() => {
-                      handleDelete(e);
-                    }}
-                  />
-                </td>
-                <td>{e.code}</td>
-                <td>{e.itemName}</td>
-                <td>{e.quantity}</td>
-                <td>{e.donatorName}</td>
-                <td>{e.contactNo}</td>
-                <td>{e.donationStatus}</td>
-              </tr>
-            );
-          });
-  
-          setDonations(donations);
-          setDonationRows(rows);     
-          handleClose();
-        }); 
-      }
-    
+    } 
     
   };
 
   return (
     <>
-      <Container>
+      <Container style={{ padding: "20px" }}>
         <h1>Donation Management</h1>
         {/* API_URL: {API_URL} */}
         <Button variant="warning" onClick={handleShowAdd}>
@@ -347,6 +374,7 @@ export default function DonationManagement() {
                 type="number"
                 ref={refCode}
                 defaultValue={donation.code}
+                disabled
                 />
                 {/*<input type="number" ref={refQuantity} defaultValue={donation.neededAmount} />*/}
               </Col>

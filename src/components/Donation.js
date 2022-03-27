@@ -98,6 +98,7 @@ function Donation() {
   const donateItem = () => {
     let item = items.find((v) => itemRef.current.value === v._id);
     let randomizedCode = Math.floor(Math.random() * 1000000) + 1;
+    setRandomCode(randomizedCode);
     const newDonation = {
         code: randomizedCode,
         itemName: item.name,

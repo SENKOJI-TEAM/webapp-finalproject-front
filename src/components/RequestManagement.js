@@ -85,8 +85,9 @@ export default function RequestManagement() {
     console.log("Update Request", request)
     //refCode.current = request.code
 
-    setShow(true);
-    setRequest(request);
+      setShow(true);
+      setRequest(request);
+
   };
 
   // Show ADD Modal
@@ -158,7 +159,7 @@ export default function RequestManagement() {
       //handleItemName();
       // Add new item
       const newItem = {
-        type: itemNameToAdd,
+        type: refType.current.value,
         requestorName: refRequestorName.current.value,
         donationCode: refDonationCode.current.value,
         requestStatus: refRequestStatus.current.value
@@ -215,12 +216,12 @@ export default function RequestManagement() {
     } else {
       // Update item
       const updatedItem = {
-        // _id is required for updation
-        _id: request._id,
-        type: refType.current.value,
-        requestorName: refRequestorName.current.value,
-        donationCode: refDonationCode.current.value,
-        requestStatus: refRequestStatus.current.value
+      // _id is required for updation
+      _id: request._id,
+      type: refType.current.value,
+      requestorName: refRequestorName.current.value,
+      donationCode: refDonationCode.current.value,
+      requestStatus: refRequestStatus.current.value
       };
       console.log(updatedItem)
 
@@ -278,7 +279,8 @@ export default function RequestManagement() {
           setRequests(requests);
           setRequestRows(rows);     
           handleClose();
-        }); 
+        });
+ 
       }
     
     
@@ -286,7 +288,7 @@ export default function RequestManagement() {
 
   return (
     <>
-      <Container>
+      <Container style={{ padding: "20px" }}>
         <h1>User Request Management</h1>
         {/* API_URL: {API_URL} */}
         <Button variant="warning" onClick={handleShowAdd}>
@@ -351,6 +353,7 @@ export default function RequestManagement() {
                 type="number" 
                 ref={refDonationCode}
                 defaultValue={request.donationCode}
+                disabled
                 />
                 {/*<input type="text" ref={refDonatorName} defaultValue={donation.donatorName} />*/}
               </Col>

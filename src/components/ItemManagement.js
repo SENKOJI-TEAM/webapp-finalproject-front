@@ -77,7 +77,7 @@ export default function ItemManagement() {
   const handleDelete = (item) => {
     console.log("Delete item", item)
     // way to pop up confirmation modal (html-style)
-    if (window.confirm(`Are you sure to delete [${item.name}]?`)) {
+    if (window.confirm(`Are you sure to delete Item "${item.name}"?`)) {
       // DELETE data
       fetch(`${API_URL}/items/${item._id}`, {
         method: "DELETE", // *GET, POST, PUT, DELETE, etc.
@@ -138,6 +138,31 @@ export default function ItemManagement() {
         return false;
       }
     } 
+    return true;
+  };
+
+  const updatedItemIsValid = () => {
+    let updatedName = refName.current.value;
+    let updatedNeededAmount = refNeed.current.value;
+
+    if (updatedName === "") {
+      window.alert("Item name is empty")
+      return false;
+    } else if (updatedNeededAmount <= 0) {
+      window.alert("Item's need amount must be at least 1.")
+      return false;
+    } 
+    
+    // let counter = 0;
+    // for (let i = 0; i < items.length; i++) {
+    //   if (updatedName === items[i].name) {
+    //     counter += 1
+    //   }
+    // }
+    // if ((counter === 1)) {
+    //   window.alert("This item already exists.")
+    //   return false;
+    // }
     return true;
   };
 
@@ -207,64 +232,66 @@ export default function ItemManagement() {
       };
       console.log(updatedItem)
 
-      // PUT data
-      fetch(`${API_URL}/items`, {
-        method: "PUT", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, *cors, same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        // credentials: "same-origin", // include, *same-origin, omit
-        headers: {
-          "Content-Type": "application/json",
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        redirect: "follow", // manual, *follow, error
-        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(updatedItem), // body data type must match "Content-Type" header
-      })
-      .then(res => res.json())
-      .then(json => {
-        // Sucessfully updated the item
-        console.log("PUT Result", json)
-        for (let i=0; i<items.length; i++) {
-          if (items[i]._id === updatedItem._id) {
-            items[i] = updatedItem;
-            break;
+      if (updatedItemIsValid()) {
+        // PUT data
+        fetch(`${API_URL}/items`, {
+          method: "PUT", // *GET, POST, PUT, DELETE, etc.
+          mode: "cors", // no-cors, *cors, same-origin
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          // credentials: "same-origin", // include, *same-origin, omit
+          headers: {
+            "Content-Type": "application/json",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          redirect: "follow", // manual, *follow, error
+          referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          body: JSON.stringify(updatedItem), // body data type must match "Content-Type" header
+        })
+        .then(res => res.json())
+        .then(json => {
+          // Sucessfully updated the item
+          console.log("PUT Result", json)
+          for (let i=0; i<items.length; i++) {
+            if (items[i]._id === updatedItem._id) {
+              items[i] = updatedItem;
+              break;
+            }
           }
-        }
-        
-        const rows = items.map((e, i) => {
-            return (
-              <tr key={i}>
-                <td>
-                  <FaPencilAlt
-                    onClick={() => {
-                      handleUpdate(e);
-                    }}
-                  />
-                  &nbsp;
-                  <FaTrashAlt
-                    onClick={() => {
-                      handleDelete(e);
-                    }}
-                  />
-                </td>
-            
-                <td>{e.name}</td>
-                <td>{e.neededAmount}</td>
-              </tr>
-            );
+          
+          const rows = items.map((e, i) => {
+              return (
+                <tr key={i}>
+                  <td>
+                    <FaPencilAlt
+                      onClick={() => {
+                        handleUpdate(e);
+                      }}
+                    />
+                    &nbsp;
+                    <FaTrashAlt
+                      onClick={() => {
+                        handleDelete(e);
+                      }}
+                    />
+                  </td>
+              
+                  <td>{e.name}</td>
+                  <td>{e.neededAmount}</td>
+                </tr>
+              );
+            });
+    
+            setItems(items);
+            setItemRows(rows);     
+            handleClose();
           });
-  
-          setItems(items);
-          setItemRows(rows);     
-          handleClose();
-        });
+        }
     }
   };
 
   return (
     <>
-      <Container>
+      <Container style={{ padding: "20px" }}>
         <h1>Item Management</h1>
         {/* API_URL: {API_URL} */}
         <Button variant="warning" onClick={handleShowAdd}>

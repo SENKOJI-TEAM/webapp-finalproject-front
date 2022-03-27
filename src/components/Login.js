@@ -16,7 +16,7 @@ export function Login({ email, password, onLogin }) {
   //console.log(errors);
 
   return (
-    <Form onSubmit={handleSubmit(onLogin)}>
+    <Form onSubmit={handleSubmit(onLogin)} style={{ padding: "20px" }}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
 
         <Row style={{ textAlign: "center" }}>
@@ -52,7 +52,7 @@ export function Login({ email, password, onLogin }) {
 
       {/* <input type="submit" /> */}
       <div className="d-grid gap-2">
-        <Button type="submit" variant="outline-dark">
+        <Button type="submit" variant="primary">
           Login
         </Button>
       </div>

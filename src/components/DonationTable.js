@@ -19,6 +19,7 @@ function DonationTable({ data, clearDataItems, updateDataItems }) {
           {/* <td className={style.textCenter}>
             <FaTrashAlt onClick={() => deleteItem(v._id)} />
           </td> */}
+          <td className={style.textCenter}>{v.code}</td>
           <td className={style.textCenter}>{v.itemName}</td>
           <td className={style.textCenter}>{v.quantity}</td>
           <td className={style.textCenter}>{v.donatorName}</td>
@@ -56,6 +57,7 @@ function DonationTable({ data, clearDataItems, updateDataItems }) {
         <thead>
           <tr>
             {/* <th style={{ width: "20px" }}>&nbsp;</th> */}
+            <th className={style.textLeft}>Code</th>
             <th className={style.textLeft}>Name</th>
             <th className={style.textLeft}>Qty</th>
             <th className={style.textLeft}>Donator</th>
